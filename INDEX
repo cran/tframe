@@ -1,0 +1,39 @@
+00General_Description    Tframe
+add.date                 Add Periods to a Date
+availability             Check Data Availability
+classed                  Tframe Library Utilities
+earliest.end             Start and End for Ragged Multivariate Time
+                         Series
+end                      Generic Time Series Parameters
+expand                   Expand a Tframe or Tframed Object.
+freeze                   Get fixed data snapshot
+freeze.tfPADIdata        Get fixed data snapshot
+getpadi                  Get Data from TSPADI Database Interface
+identifiers              Get Identifiers from a data object
+is.consistent.tframe     Check for a Consistent tframe
+lag                      Misc Generic Replacements
+modify                   modify a database descriptor object
+modify.tfPADIdata        modify a database descriptor object
+nseries                  Number of Series
+print.tfPADIdata         Print a tfPADIdata Object
+refresh                  Retrieve new data from a database
+select.series            Extract a Subset of Series
+series.names             Names of Series in a tframed object
+set.tfPADIdata           Prompt for series names
+source.info              Get source information from a data object
+sourcedb                 Get sourcedb from a data object
+sourceserver             Get source server from a data object
+splice                   Splice Time Series
+tbind                    Bind Time Series
+test.equal               Compare Two Objects
+tfPADI.function.tests    Function Tests for tfPADI
+tfPADIdata               make tfPADIdata object
+tfprint                  Print and Plot Tframed Objects
+tfputpadi                Write Data to a Data Server
+tframe                   Extract or Set a Tframe
+tframe.function.tests    tframe.function.tests
+tframed                  Construct a Tframed Object
+tfwindow                 Truncate a Time Series
+time                     Time
+trim.na                  Trim NAs from Time Series
+tsp.tfPADIdata           Specific Methods for tsp
