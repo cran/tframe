@@ -3,7 +3,7 @@
 \alias{is.consistent.tframe.default}
 \alias{is.consistent.tframe.stamped}
 
-\title{Check for a Consistent tframe}
+\title{is.consistent.tframe}
 \description{
 	Check if tframe and a time series are consistent with one another.}
 \usage{

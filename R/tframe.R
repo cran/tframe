@@ -1,3 +1,21 @@
+#   2000/03/21 14:41:54 
+
+#   Copyright 1993, 1994, 1995, 1996  Bank of Canada.
+#   Copyright 1997 (June), Paul Gilbert.
+#   Copyright 1997 (Aug.), Bank of Canada.
+#   Copyright 1998, 1999, 2000   Bank of Canada.
+
+#   The user of this software has the right to use, reproduce and distribute it.
+#   Bank of Canada and Paul Gilbert make no warranties with respect to the 
+#   software or its fitness for any particular purpose. 
+#   The software is distributed by the Bank of Canada and by Paul Gilbert 
+#   solely on an "as is" basis. By using the software, user agrees to accept 
+#   the entire risk of using this software.
+
+################################################################################
+
+
+#   2000/04/20 14:50:55  
 
 ###########################################################################
 
@@ -6,6 +24,7 @@
 if (is.R())
   { tfclass    <- .Alias(class)
    "tfclass<-" <- .Alias(get("class<-"))
+   require("syskern",  warn.conflicts=F)  # this may not be necessary
   } else
 if (is.S())
   { tfclass     <- class
@@ -41,7 +60,24 @@ seqN <- function(N) {if (0==length(N)) NULL else if (N<=0) NULL else seq(N)}
 # tframe classes and methods       <<<<<<<<<<<<
 
 ###########################################################################
-        
+   
+
+
+
+
+
+
+
+
+
+                
+
+
+
+
+
+
+                 
 
 ###############################################
 
@@ -128,10 +164,10 @@ tfwindow.default <- function(x, start.=NULL, end.=NULL, warn=T)
 #  tframe  methods   <<<<<<<<<<<<
 
 ################################################
-is.tframe <- function(tf) inherits(tf, "tframe")
+is.tframe  <- function(tf) inherits(tf, "tframe")
 is.tframed <- function (x) inherits(tframe(x), "tframe")
 
-tframe <- function(x) {UseMethod("tframe") } #extract the tframe
+tframe <-function(x) {UseMethod("tframe") } #extract the tframe
 
 tframe.default <- function(x){
 	if(is.null(x)) NULL 
@@ -145,16 +181,16 @@ tframe.default <- function(x){
 # Following switches dispatch to class of tf value rather than class of x
 #    except in the case of null assignment.
 
-"tframe<-" <- function(x, value)
+"tframe<-" <-function(x, value)
  {if(is.null(value)) UseMethod("tframe<-")
   else settf(value,x)
  }
 
-"tframe<-.default" <- function(x, value) {tsp(x) <- value; x}
+"tframe<-.default" <-function(x, value) {tsp(x) <- value; x}
 
 settf <- function(value, x) {UseMethod("settf") }
 
-settf.default <- function(value, x)
+settf.default     <- function(value, x)
 {if (!is.consistent.tframe(value, x))
     stop("time frame value in tframe assignment is not consistent with data.")
  tsp(x) <- value
@@ -189,69 +225,69 @@ tframed.default  <- function (x, tf=NULL, names = NULL)
 ###############################################
 
 
-tfprint.tframe <- function(x, digits=NULL, quote=T, prefix="", ...) 
+tfprint.tframe <-function(x, digits=NULL, quote=T, prefix="", ...) 
    UseMethod("tfprint.tframe")
 
-tfprint.tframe.default <- function(x, digits=NULL, quote=T, prefix="", ...) 
+tfprint.tframe.default <-function(x, digits=NULL, quote=T, prefix="", ...) 
    invisible(print(unclass(x), quote=quote, prefix=prefix, ...))
    # digits=digits, seems to cause problems ?
 
 
 
 start.tframe <- function(tf)UseMethod("start.tframe")
-end.tframe <- function(tf)UseMethod("end.tframe")
+end.tframe   <- function(tf)UseMethod("end.tframe")
 
 # periods should give the number of data points in the time direction.
 periods.tframe <- function(tf)UseMethod("periods.tframe")
 
 # frequency is less essential and may not always make sense.
-frequency.tframe <- function(tf)UseMethod("frequency.tframe")
+frequency.tframe <-function(tf)UseMethod("frequency.tframe")
 
 time.tframe <- function(tf)UseMethod("time.tframe")
 
-truncate.tframe <- function(tf, start=NULL, end=NULL)
+truncate.tframe <-function(tf, start=NULL, end=NULL)
     {#NULL means no truncation.
      UseMethod("truncate.tframe")
     }
 
-expand.tframe <- function(tf, add.start=0, add.end=0)
+expand.tframe <-function(tf, add.start=0, add.end=0)
      UseMethod("expand.tframe")
 
 
 
-is.consistent.tframe <- function(tf, x) UseMethod("is.consistent.tframe")
+is.consistent.tframe <-function(tf, x) UseMethod("is.consistent.tframe")
 
-is.consistent.tframe.default <- function(tf, x)
+is.consistent.tframe.default <-function(tf, x)
    {periods.tframe(tf) == periods(x)}
 
-test.equal.tframe <- function(tf1, tf2) UseMethod("test.equal.tframe")
+test.equal.tframe <-function(tf1, tf2) UseMethod("test.equal.tframe")
 
-test.equal.tframe.default <- function(tf1, tf2) { all(tf1==tf2)}
+test.equal.tframe.default <-function(tf1, tf2) { all(tf1==tf2)}
 
 # Following could be used to do date comparisons like start() < end()
 
-earliest.start.index.tframe <- function(x, ...)
+earliest.start.index.tframe <-function(x, ...)
     UseMethod("earliest.start.index.tframe")
 
-earliest.start.tframe <- function(x, ...)
+earliest.start.tframe <-function(x, ...)
     append(list(x),list(...))[[earliest.start.index.tframe(x, ...)]]
 
-earliest.end.index.tframe <- function(x, ...)
+earliest.end.index.tframe <-function(x, ...)
     UseMethod("earliest.end.index.tframe")
 
-earliest.end.tframe <- function(x, ...)
+earliest.end.tframe <-function(x, ...)
     append(list(x),list(...))[[earliest.end.index.tframe(x, ...)]]
 
-latest.start.index.tframe <- function(x, ...)
+latest.start.index.tframe <-function(x, ...)
     UseMethod("latest.start.index.tframe")
 
-latest.start.tframe <- function(x, ...)
+latest.start.tframe <-function(x, ...)
     append(list(x),list(...))[[latest.start.index.tframe(x, ...)]]
 
-latest.end.index.tframe <- function(x, ...)
+latest.end.index.tframe <-function(x, ...)
     UseMethod("latest.end.index.tframe")
 
-latest.end.tframe <- function(x, ...)
+latest.end.tframe <-function(x, ...)
     append(list(x),list(...))[[latest.end.index.tframe(x, ...)]]
 
 
@@ -261,31 +297,31 @@ latest.end.tframe <- function(x, ...)
 
 ################################################
 
-start.tframe.default <- function(tf) {c(floor(tf[1]), round(1 +(tf[1]%%1)*tf[3]))}
+start.tframe.default <-function(tf) {c(floor(tf[1]), round(1 +(tf[1]%%1)*tf[3]))}
 
-end.tframe.default <- function(tf) {c(floor(tf[2]), round(1 + (tf[2]%%1)*tf[3]))}
+end.tframe.default <-function(tf) {c(floor(tf[2]), round(1 + (tf[2]%%1)*tf[3]))}
 
-periods.tframe.default <- function(tf)  {1+round((tf[2]-tf[1])*tf[3])}
+periods.tframe.default <-function(tf)  {1+round((tf[2]-tf[1])*tf[3])}
 
-frequency.tframe.default <- function(tf) {tf[3]}
+frequency.tframe.default <-function(tf) {tf[3]}
 
-time.tframe.default <- function(tf) {tf[1] + (seq(periods(tf))-1)/tf[3]}
+time.tframe.default <-function(tf) {tf[1] + (seq(periods(tf))-1)/tf[3]}
 
-truncate.tframe.default <- function(tf, start=NULL, end=NULL) 
+truncate.tframe.default <-function(tf, start=NULL, end=NULL) 
     {# like window but uses indexes rather than dates
      if (!is.null(end))   tf[2] <- tf[1] + (end-1)/tf[3]
      if (!is.null(start)) tf[1] <- tf[1] + (start-1)/tf[3]
      tf
     }
 
-expand.tframe.default <- function(tf, add.start=0, add.end=0) 
+expand.tframe.default <-function(tf, add.start=0, add.end=0) 
     {tf[2] <- tf[2] + add.end/tf[3]
      tf[1] <- tf[1] - add.start/tf[3]
      tf
     }
 
 
-earliest.start.index.tframe.default <- function(x, ...) 
+earliest.start.index.tframe.default <-function(x, ...) 
     {r <- 1
      fr <- frequency(x)
      args <- list(x, ...)
@@ -297,7 +333,7 @@ earliest.start.index.tframe.default <- function(x, ...)
      r
     }
 
-earliest.end.index.tframe.default <- function(x, ...) 
+earliest.end.index.tframe.default <-function(x, ...) 
     {r <- 1
      fr <- frequency(x)
      args <- list(x, ...)
@@ -309,7 +345,7 @@ earliest.end.index.tframe.default <- function(x, ...)
      r
     }
 
-latest.start.index.tframe.default <- function(x, ...) 
+latest.start.index.tframe.default <-function(x, ...) 
     {r <- 1
      fr <- frequency(x)
      args <- list(x, ...)
@@ -321,7 +357,7 @@ latest.start.index.tframe.default <- function(x, ...)
      r
     }
 
-latest.end.index.tframe.default <- function(x, ...) 
+latest.end.index.tframe.default <-function(x, ...) 
     {r <- 1
      fr <- frequency(x)
      args <- list(x, ...)
@@ -340,25 +376,25 @@ latest.end.index.tframe.default <- function(x, ...)
 
 ###############################################
 
-#"tframe.tframe<-.ts"  <- function(x, value) {tsp(x) <- value; x}
+#"tframe.tframe<-.ts"      <- function(x, value) {tsp(x) <- value; x}
 
 tframe.ts <- function(x){classed(tsp(x), c("tstframe", "tframe"))} # constructor
 
-"tframe<-.ts"      <- function(x, value) {tsp(x) <- value; x}
+"tframe<-.ts"          <- function(x, value) {tsp(x) <- value; x}
 
 #settf.default works for .ts
 
-start.tframe.tstframe <- function(tf)
+start.tframe.tstframe <-function(tf)
    {c(floor(tf[1]), round(1 +(tf[1]%%1)*tf[3]))}
 
-end.tframe.tstframe <- function(tf)
+end.tframe.tstframe <-function(tf)
    {c(floor(tf[2]), round(1 + (tf[2]%%1)*tf[3]))}
 
-periods.tframe.tstframe <- function(tf)  {1+round((tf[2]-tf[1])*tf[3])}
+periods.tframe.tstframe <-function(tf)  {1+round((tf[2]-tf[1])*tf[3])}
 
-frequency.tframe.tstframe <- function(tf) {tf[3]}
+frequency.tframe.tstframe <-function(tf) {tf[3]}
 
-time.tframe.tstframe <- function(tf) {tf[1] + (seq(periods(tf))-1)/tf[3]}
+time.tframe.tstframe <-function(tf) {tf[1] + (seq(periods(tf))-1)/tf[3]}
 
 
 
@@ -371,9 +407,9 @@ time.tframe.tstframe <- function(tf) {tf[1] + (seq(periods(tf))-1)/tf[3]}
 
 ###############################################
 
-tframe.tf <- function(x) {attr(x, "tf") }
+tframe.tf   <- function(x) {attr(x, "tf") }
 
-"tframe<-.tf" <- function(x, value)
+"tframe<-.tf"     <- function(x, value)
   {if (!is.null(value)) return(settf.tftframe(value, x))
    else 
      {attr(x, "tf") <- NULL
@@ -397,7 +433,7 @@ tframe.tf <- function(x) {attr(x, "tf") }
 # }
 
 
-settf.tftframe <- function(value, x)
+settf.tftframe  <- function(value, x)
 {#class(value) <- c("tftframe", "tframe")
  if (!is.consistent.tframe(value, x))
     stop("time frame value in tframe assignment is not consistent with data.")
@@ -406,23 +442,23 @@ settf.tftframe <- function(value, x)
 }
 
 
-start.tf <- function(x) {start(tframe(x))}
-end.tf   <- function(x) {end(tframe(x))}
-periods.tf <- function(x) {periods(tframe(x))}
+start.tf     <- function(x) {start(tframe(x))}
+end.tf       <- function(x) {end(tframe(x))}
+periods.tf   <- function(x) {periods(tframe(x))}
 frequency.tf <- function(x) {frequency(tframe(x))}
-time.tf  <- function(x) {time(tframe(x))}
+time.tf      <- function(x) {time(tframe(x))}
 
-start.tframe.tftframe <- function(tf)
+start.tframe.tftframe <-function(tf)
    {c(floor(tf[1]), round(1 +(tf[1]%%1)*tf[3]))}
 
-end.tframe.tftframe <- function(tf)
+end.tframe.tftframe <-function(tf)
    {c(floor(tf[2]), round(1 + (tf[2]%%1)*tf[3]))}
 
-periods.tframe.tftframe <- function(tf)  {1+round((tf[2]-tf[1])*tf[3])}
+periods.tframe.tftframe <-function(tf)  {1+round((tf[2]-tf[1])*tf[3])}
 
-frequency.tframe.tftframe <- function(tf) {tf[3]}
+frequency.tframe.tftframe <-function(tf) {tf[3]}
 
-time.tframe.tftframe <- function(tf) {tf[1] + (seq(periods(tf))-1)/tf[3]}
+time.tframe.tftframe <-function(tf) {tf[1] + (seq(periods(tf))-1)/tf[3]}
 
 tfwindow.tf <- function  (x, start=NULL, end=NULL, warn=T, eps=.Options$ts.eps) 
   {# this needs work
@@ -437,7 +473,7 @@ tfwindow.tf <- function  (x, start=NULL, end=NULL, warn=T, eps=.Options$ts.eps)
 ###############################################
 
 
-"tframe<-.TSdata" <- function(x, value)
+"tframe<-.TSdata" <-function(x, value)
  {if (0 != input.dimension(x)) tframe( input.data(x)) <- value
   if (0 !=output.dimension(x)) tframe(output.data(x)) <- value
   x
@@ -453,8 +489,8 @@ tfwindow.tf <- function  (x, start=NULL, end=NULL, warn=T, eps=.Options$ts.eps)
 
 
 
-"tframe<-.rts"     <- function(x, value) {rts(x) <- value; x}
-"tframe.tframe<-.rts" <- function(value, x)
+"tframe<-.rts"        <-function(x, value) {rts(x) <- value; x}
+"tframe.tframe<-.rts" <-function(value, x)
 {if (!is.consistent.tframe(value, x))
     stop("time frame value in tframe assignment is not consistent with data.")
  rts(x) <- value
@@ -473,10 +509,10 @@ tfwindow.tf <- function  (x, start=NULL, end=NULL, warn=T, eps=.Options$ts.eps)
 #  stamped specific methods   <<<<<<<<<<<<
 #  stamped class TS have a date/time stamp associated with each time point
 ################################################
-is.consistent.tframe.stamped <- function(tf, x)
+is.consistent.tframe.stamped <-function(tf, x)
   {periods(x) == periods(tf)}
 
-test.equal.tframe.stamped <- function(tf1, tf2)
+test.equal.tframe.stamped <-function(tf1, tf2)
   {all(tf1$stamp == tf2$stamp)}
 
 periods.tframe.stamped <- function(x)length(tframe(x))
@@ -487,7 +523,7 @@ periods.tframe.stamped <- function(x)length(tframe(x))
 
 
 
-test.equal <- function(obj1, obj2, ...) UseMethod("test.equal")
+test.equal<- function(obj1, obj2, ...) UseMethod("test.equal")
 
  
 test.equal.default <- function (obj1, obj2, fuzz=1e-16) 
@@ -530,7 +566,7 @@ test.equal.list <- function (obj1, obj2, fuzz=1e-16)
 
 if (!exists("lag")) lag <- function(x, ...) { UseMethod("lag") }
 
-lag.tframe <- function(x,...)UseMethod("lag.tframe") 
+lag.tframe  <- function(x,...)UseMethod("lag.tframe") 
 
 if (!exists("lag"))  lag.default <- function(x, ...) {stop("no lag function") }
 
@@ -539,7 +575,7 @@ if (!exists("lag"))  lag.default <- function(x, ...) {stop("no lag function") }
 
 splice <- function(obj1, obj2, ...) UseMethod("splice")
 
-splice.default <- function(mat1, mat2)
+splice.default <-function(mat1, mat2)
 {# splice together 2 time series matrices. If data  is provided in both for
  #  a given period then mat1 takes priority.
  # The result starts at the earlier of mat1 and mat2 and ends at the later.
@@ -591,7 +627,7 @@ truncate <- function(x, start=NULL, end=NULL)
   UseMethod("truncate")
  }
 
-truncate.default <- function(x, start=NULL, end=NULL)
+truncate.default <-function(x, start=NULL, end=NULL)
     {tf <- truncate.tframe(tframe(x), start, end)
      if (is.null(start)) start <- 1
      if (is.matrix(x)) 
@@ -612,16 +648,16 @@ expand <- function(x, add.start=0, add.end=0)
   UseMethod("expand")
  }
 
-expand.default <- function(x, start=NULL, end=NULL)
+expand.default <-function(x, start=NULL, end=NULL)
     {tf <- expand.tframe(tframe(x), start, end)
      select.series(tbind(x,time(tf)), series=1)
     }
 
 
-earliest.start <- function(x, ...)
+earliest.start <-function(x, ...)
     start(append(list(x),list(...))[[earliest.start.index(x, ...)]])
 
-earliest.start.index <- function(x, ...)
+earliest.start.index <-function(x, ...)
   {if (is.tframe(x)) UseMethod("earliest.start.index.tframe")
    else 
      {tf <- list(tframe(x))
@@ -631,10 +667,10 @@ earliest.start.index <- function(x, ...)
    r
   }
 
-earliest.end <- function(x, ...)
+earliest.end <-function(x, ...)
     end(append(list(x),list(...))[[earliest.end.index(x, ...)]])
 
-earliest.end.index <- function(x, ...)
+earliest.end.index <-function(x, ...)
   {if (is.tframe(x)) UseMethod("earliest.end.index.tframe")
    else 
      {tf <- list(tframe(x))
@@ -644,10 +680,10 @@ earliest.end.index <- function(x, ...)
    r
   }
 
-latest.start <- function(x, ...)
+latest.start <-function(x, ...)
     start(append(list(x),list(...))[[latest.start.index(x, ...)]])
 
-latest.start.index <- function(x, ...)
+latest.start.index <-function(x, ...)
   {if (is.tframe(x)) UseMethod("latest.start.index.tframe")
    else 
      {tf <- list(tframe(x))
@@ -657,10 +693,10 @@ latest.start.index <- function(x, ...)
    r
   }
 
-latest.end <- function(x, ...)
+latest.end <-function(x, ...)
     end(append(list(x),list(...))[[latest.end.index(x, ...)]])
 
-latest.end.index <- function(x, ...)
+latest.end.index <-function(x, ...)
   {if (is.tframe(x)) UseMethod("latest.end.index.tframe")
    else 
      {tf <- list(tframe(x))
@@ -674,7 +710,7 @@ latest.end.index <- function(x, ...)
 
 trim.na <- function(obj, ...) UseMethod("trim.na") 
 
-trim.na.default <- function(x, start.=T, end.=T)
+trim.na.default <-function(x, start.=T, end.=T)
 {# trim NAs from the ends of a ts matrix.
  # (Observations for all series are dropped in a given period if any 
  #  one contains an NA in that period.)
@@ -699,14 +735,14 @@ trim.na.default <- function(x, start.=T, end.=T)
 
 
 nseries <- function (x) {UseMethod("nseries")} 
-nseries.default <- function(x)  {ncol(x)} 
+nseries.default  <- function(x)  {ncol(x)} 
 
    
 
- series.names <- function(x)       UseMethod("series.names")
-"series.names<-" <- function(x, value)UseMethod("series.names<-")
+ series.names     <- function(x)       UseMethod("series.names")
+"series.names<-"  <- function(x, value)UseMethod("series.names<-")
 
- series.names.default <- function(x)
+ series.names.default    <-function(x)
    {if (is.null(x)) return(NULL)
     names <- attr(x, "series.names")
     if (is.null(names)) names <- dimnames(x)[[2]]
@@ -714,7 +750,7 @@ nseries.default <- function(x)  {ncol(x)}
     names
    }
 
-"series.names<-.default" <- function(x, value){attr(x,"series.names")<-value; x}
+"series.names<-.default" <-function(x, value){attr(x,"series.names")<-value; x}
 
 
 
@@ -924,3 +960,748 @@ tframe.function.tests <- function( verbose=T, synopsis=T)
   invisible(all.ok)
 }
 
+#   2000/03/21 14:42:18 
+
+#print.tframe.tstframe <- function(x,digits=NULL, quote = T, prefix = "", ...) 
+#invisible(print(unclass(x), quote = quote))
+
+
+
+#if( !exists("start.default"))  start.default <- start
+#if( !exists("end.default")) end.default <- end
+#if( !exists("frequency.default")) frequency.default <- frequency
+#if( !exists("time.default")) time.default <- time
+
+
+# this fix sent to r-devel  28sept98
+# "tsp<-" <-function(x, value)
+# {if (is.null(value)) 
+#    {attr(x, "tsp") <- value
+#     if(inherits(x,"ts")) class (x) <- NULL
+#     return(x)
+#    }
+#  attr(x, "tsp") <-  value  # previously c(tf[1:2]*tf[3], tf[3])
+#  class (x) <- "ts"
+#  x
+# }
+
+# this fix sent to Martin 30sept98
+# "tsp<-" <-function(x, value)
+# {attr(x, "tsp") <-  value 
+#  if (is.null(value) && inherits(x,"ts")) class(x) <- NULL
+#  else class (x) <- "ts"
+#  x
+# }
+
+
+# "tsp<-" <-function(x, value)
+#   {attr(x, "tsp") <-  value
+#    if (is.null(value)) 
+#      {if(inherits(x,"ts")) tfclass(x) <- tfclass(x)["ts" != tfclass(x)]
+#       return(x)
+#      }
+#    tfclass(x) <- c("ts", tfclass(x))
+#    x
+#   }
+
+# This version sent by Martin  14 Oct 1998.
+# Modified by PG with classed March 9, 1999. 
+
+# in base R 0.65.0
+#"tsp<-" <- function(x, value)
+#{
+#    cl <- class(x)
+#    attr(x,"tsp") <- value
+#    classed(x,
+#        if (is.null(value) && inherits(x,"ts")) cl["ts" != cl] else c("ts",cl))
+#}
+# "tsp<-" moved to Rfixes.hs
+
+# The R version of window.ts does not use optional
+# values for start and end, but rather checks for missing arguments, so 
+#  argument passing may cause problems. Also, warn is not supported and,
+#  sometime in the past I found it necessary to add eps for date comparisons to
+#  work properly in some situations.
+
+#window.ts <-function(x, start=NULL, end=NULL, warn=T, eps=.Options$ts.eps)
+#    {f <- tsp(x)[3]
+#     if (is.null(start)) start <- tsp(x)[1]
+#     if (is.null(end))   end   <- tsp(x)[2]
+#     if (2 == length(start)) start <- start[1] + (start[2]-1)/f
+#     if (2 == length(end))    end  <-   end[1] + (  end[2]-1)/f
+#     if (start < tsp(x)[1])
+#        {start <- tsp(x)[1]
+#         if (warn) warning("Specified start earlier than start of data, start not changed.")
+#        }
+#     if (end > tsp(x)[2])
+ #       {end <- tsp(x)[2]
+#         if (warn) warning("Specified end later than end of data, end not changed.")
+#        }
+#     leave <- (time(x) >= (start-eps)) & (time(x) <= (end+eps))
+#     #Rbug unclass shouldn't be needed in the next line
+#     if (is.matrix(x)) z <- unclass(x)[leave,,drop=F] 
+#     else  z <- x[leave]
+##     tsp(z) <- c(start, end, f)
+#     classed(ts(z, start=start, end=end, frequency=f), tfclass(x))
+#    }
+
+
+# Martin M's version in R 62.3 seems better.
+# matplot <- function(x, y, type ="p", lty=1:3, xlab="x", ylab="y", 
+#               colors=c("black", "blue", "red", "green", "cyan"), ...) 
+#   {# lty only affects type="l"
+#    # if lty is not long enough it is repeated using colors so set lty=1 to
+#    #  make each plot a different colour.
+#    if (!is.matrix(y)) y <- matrix(y, length(y),1)
+#    # vector or column matrix is repeated for each column of y:
+#    if ((is.matrix(x)) && (ncol(x)==1)) x <- c(x) 
+#    if (!is.matrix(x)) x <- matrix(x, length(x), dim(y)[2])
+#    if (!all(dim(x) == dim(y)))
+#        stop("matplot array dimensions do not correspond.")
+#    colors <- c(t(matrix(colors, length(colors), length(lty))))
+#    if (length(colors) < ncol(y)) colors <-(rep(colors, ncol(y)))[seq(ncol(y))]
+#    if (length(lty) < ncol(y)) lty <- (rep(lty, ncol(y)))[seq(ncol(y))]
+#    for (i in 1:ncol(x)) 
+#      {if (i ==1) tfplot.default(x[,i],y[,i],xlim=range(x[!is.na(x)]), 
+#         ylim=range(y[!is.na(y)]),
+#         xlab=xlab, ylab=ylab, type=type, lty=lty[i], col=colors[i], ...)
+#       else lines(x[,i],y[,i], type=type, lty=lty[i], col=colors[i],  ...)
+#      }
+#    invisible()
+#   }
+
+
+
+###############################################
+
+#  tstframe (ts) specific methods   <<<<<<<<<<<<
+
+################################################
+
+tframe.tstframe <-function(x)
+ {classed(tsp(x), c("tstframe", "tframe"))}  # constructor
+
+start.tframe.tstframe <-function(tf) {c(floor(tf[1]), round(1 +(tf[1]%%1)*tf[3]))}
+
+end.tframe.tstframe <-function(tf) {c(floor(tf[2]), round(1 + (tf[2]%%1)*tf[3]))}
+
+periods.tframe.tstframe <-function(tf)  {1+round((tf[2]-tf[1])*tf[3])}
+
+frequency.tframe.tstframe <-function(tf) {tf[3]}
+
+time.tframe.tstframe <-function(tf) {tf[1] + (seq(periods(tf))-1)/tf[3]}
+
+truncate.tframe.tstframe <-function(tf, start=NULL, end=NULL) 
+    {if (!is.null(end))   tf[2] <- tf[1] + (end-1)/tf[3]
+     if (!is.null(start)) tf[1] <- tf[1] + (start-1)/tf[3]
+     tf
+    }
+
+expand.tframe.tstframe <-function(tf, add.start=0, add.end=0) 
+    {tf[2] <- tf[2] + add.end/tf[3]
+     tf[1] <- tf[1] - add.start/tf[3]
+     tf
+    }
+
+
+earliest.start.index.tframe.tstframe <-function(x, ...) 
+    {r <- 1
+     fr <- frequency(x)
+     args <- list(x, ...)
+     for (i in seq(length(args)))
+         {tf <- args[[i]]
+          if (tf[3] != fr) stop("frequencies must be that same.")
+          if (tf[1] < args[[r]][1]) r <- i
+         }           
+     r
+    }
+
+earliest.end.index.tframe.tstframe <-function(x, ...) 
+    {r <- 1
+     fr <- frequency(x)
+     args <- list(x, ...)
+     for (i in seq(length(args)))
+         {tf <- args[[i]]
+          if (tf[3] != fr) stop("frequencies must be that same.")
+          if (tf[2] < args[[r]][2]) r <- i
+         }           
+     r
+    }
+
+latest.start.index.tframe.tstframe <-function(x, ...) 
+    {r <- 1
+     fr <- frequency(x)
+     args <- list(x, ...)
+     for (i in seq(length(args)))
+         {tf <- args[[i]]
+          if (tf[3] != fr) stop("frequencies must be that same.")
+          if (tf[1] > args[[r]][1]) r <- i
+         }           
+     r
+    }
+
+latest.end.index.tframe.tstframe <-function(x, ...) 
+    {r <- 1
+     fr <- frequency(x)
+     args <- list(x, ...)
+     for (i in seq(length(args)))
+         {tf <- args[[i]]
+          if (tf[3] != fr) stop("frequencies must be that same.")
+          if (tf[2] > args[[r]][2]) r <- i
+         }           
+     r
+    }
+#   2000/04/20 14:49:44  
+
+
+
+
+##############################################################################
+
+#  The first section of this file contains generic definitions for objects 
+#   which describe a database source for time series data. 
+
+#  Following that are methods for the object tfPADIdata.
+
+############################################################################
+
+# Note: the constructors (e.g. tfPADIdata, TSPADIdata) cannot be generic.
+
+
+
+modify <- function (x, ...) {UseMethod("modify")} 
+
+
+freeze <- function (data, ...) {
+#This function allows for the possiblity of data structures which invoke a
+#    call to a database.  It is called by functions which actually use data
+# eg:    data <- freeze(data)
+# in order to take a snapshot from the database and bring it into a 
+# structure which can be used for calculations.
+    UseMethod("freeze")
+} 
+ 
+freeze.default  <- function(data)  
+  {if ("character"==mode(data)) freeze(tfPADIdata(data, server="ets")) else data} 
+
+
+availability <- function (data, ...) UseMethod("availability")
+
+
+availability.default<-function(data.id, names=NULL, server="ets", dbname="",
+                       verbose=T, timeout=60, stop.on.error=TRUE, warn=TRUE)  
+{# Indicate  dates for which data is available. 
+ # data.id should be a character vector of data identifiers  
+ if (1== length(server)) server  <- rep(server, length(data.id))
+ if (1== length(dbname)) dbname  <- rep(dbname, length(data.id))
+
+ # next 3 lines are to look after older style name forms at the BOC
+ ets <- "ets" == substring(dbname,1,3)
+ server[ets] <-"ets"
+ dbname[ets] <- ""
+ 
+ # server[server=="ets"] <- "padi"   # temporary kludge at the BOC
+
+ s <- e <- f <- NULL
+ for (i in 1:length(data.id))
+      {data <- getpadi(data.id[i], dbname=dbname[i], server=server[i],
+                stop.on.error=stop.on.error, use.tframe=T, warn=warn, 
+                pad=F, timeout=timeout)
+       s <- rbind(s, start(data))
+       e <- rbind(e, end(data))
+       f <- c(f,frequency(data))
+       if (verbose)
+         {cat(data.id[i]," from: ",start(data))
+          cat("  to: ",end(data))
+          cat("   frequency ", frequency(data))
+          if (!is.null(names)) cat("  ",names[i])
+          cat("\n")
+      }  }
+  invisible(list(start=s, end=e, frequency=f, series=data.id))
+}
+
+
+
+refresh <- function(data)
+{src <- source.info(data)
+ if (is.null(src)) stop("data must include source information to use refresh.")
+ freeze(src)
+}
+
+
+# extract series source.info  (this is used by refresh so the result should
+#   be the correct class, etc.
+source.info <- function(obj)UseMethod("source.info")
+
+source.info.default <- function(obj){
+    if (is.null(attr(obj, "source"))) stop("object does not have source information.")
+    attr(obj, "source")
+   }
+
+# extract series identifiers
+identifiers <- function(obj)UseMethod("identifiers")
+
+identifiers.default <- function(obj){
+    if (is.null(attr(obj, "source"))) stop("object does not have source information.")
+    attr(obj, "source")[1,]
+   } 
+   
+
+# extract series sourcedb
+sourcedb <- function(obj)UseMethod("sourcedb")
+
+sourcedb.default <- function(obj){
+    if (is.null(attr(obj, "source"))) stop("object does not have source information.")
+    attr(obj, "source")[3,]
+   } 
+   
+
+# extract series sourceserver
+sourceserver <- function(obj)UseMethod("sourceserver")
+
+sourceserver.default <- function(obj){
+    if (is.null(attr(obj, "source"))) stop("object does not have source information.")
+    attr(obj, "source")[2,]
+   }
+   
+############################################################################
+
+#    functions define a time series matrix class "tfPADIdata"    <<<<<<<<<<
+#      which uses the TSPADI  data interface. See also dsepadi   <<<<<<<<<<
+#      file uses the methods here to define TSdata.              <<<<<<<<<<
+
+############################################################################
+
+# The PADI interface uses some calls to operating system specific functions:
+#    -the function sleep is used in TSPADI.function.tests  
+#    -the function local.host.netname defined in syskern.s
+#    -the function user.name defined in the PADI interface software calls a
+#        program (getpwuid) in the $PADI/bin. This was previously done with
+#        whoami() in syskern.s, which uses /usr/ucb/whoami (not system V unix).
+#        It is important that user.name() return the same result as the C
+#        function getpwuid in order for the padi interface to work properly.
+
+
+############################################################
+
+#   Definition of class c("tfPADIdata") <<<<<<<<<<
+
+############################################################
+
+
+
+tfPADIdata <- function( series,  server = "", db= "", transforms= "",  
+           start=NA, end=NA, frequency=NA, names=NULL, 
+           pad=FALSE, pad.start=pad, pad.end=pad,
+           use.tframe=T,
+           start.server=NULL, server.process=NULL, cleanup.script=NULL,
+           stop.on.error=T, warn=T)
+  {# This is the constructor (but see set.tfPADIdata for a prompter).
+   if (is.null(series)) return(NULL)
+   if (is.null(names))   names <- series
+   if(length(series) != length(names) )
+           stop("number of names does not match number of series.")
+   r <- rbind(series, server, db, transforms)
+   dimnames(r) <- list(c("series", "server", "db", "transforms") ,names)
+   attr(r, "start")     <- start
+   attr(r, "end")       <- end
+   attr(r, "frequency") <- frequency
+   attr(r, "pad.start") <- pad.start
+   attr(r, "pad.end")   <- pad.end
+   attr(r,"use.tframe") <- use.tframe 
+
+   attr(r, "start.server") <- start.server
+   attr(r, "server.process") <- server.process
+   attr(r, "cleanup.script") <- cleanup.script
+   attr(r, "stop.on.error") <- stop.on.error
+   attr(r, "warn")      <- warn
+   class(r) <- "tfPADIdata"
+   r
+   }
+
+
+
+set.tfPADIdata <- function(preamble=T)
+ {# prompt for series identifiers, set class, etc.
+  if (preamble) 
+    {cat("This function prompts for the names and database locations for\n")
+     cat("series, until an empty line is entered.\n\n")
+     cat("Variables...\n")
+    }
+  series <- server <- db <- transforms <- NULL
+  repeat
+    {key <- readline("  series..")
+# cat(":",key,":") there seems to be a bug here. readline is not flushing
+     if (""== key) break  else series <-c(series, key)
+     server     <- c(server,     readline("  server.."))
+     db         <- c(db,         readline("  database.."))
+     transforms <-c(transforms,  readline("  transformation.."))
+    } 
+  if (is.null(series)) return(NULL) 
+  cat("  starting year..");key <- readline()
+     if (!(""== key)) 
+       {start. <- as.integer(key)
+        cat("  starting period..");key <- readline()
+        start. <- c(start., as.integer(key))
+        if(any(is.na(start.)))
+            cat("Warning: start improperly specified. NOT set!")
+        }
+     else start. <- NA
+  cat("  ending year..");key <- readline()
+     if (!(""== key)) 
+       {end. <- as.integer(key)
+        cat("  ending period..");key <- readline()
+        end. <- c(end., as.integer(key))
+        if(any(is.na(end.))) cat("Warning: end improperly specified. NOT set!")
+        }
+     else end. <- NA
+
+  data <- tfPADIdata(series, server=server, db=db, transforms=transforms,
+                     start=start., end=end.)
+  if (preamble) 
+    {cat("The series may now be retrieved, in which case the data is\n")
+     cat("  fixed as currently available, or they may be left `dynamic',\n")
+     cat("  in which case they are retrieved using freeze.\n")
+     cat("Retrieve data y/n:");key <- readline()
+     if ((key =="y") | (key=="Y")) data <- freeze(data)
+    }
+  data
+}
+
+
+modify.tfPADIdata <- function( r, append=NA, 
+           series=NA, server=NA, db=NA, transforms=NA, 
+           start=NA, end=NA, frequency=NA, names=NA, 
+           pad=NA, pad.start=NA, pad.end=NA,
+           use.tframe=NA,
+           start.server=NA, server.process=NA, cleanup.script=NA,
+           stop.on.error=NA, warn=NA)
+  {
+   if (!is.na(series))     r[1,] <- series
+   if (!is.na(server))     r[2,] <- server
+   if (!is.na(db))         r[3,] <- db
+   if (!is.na(transforms)) r[4,] <- transforms
+   
+   if (!is.na(names))
+       dimnames(r) <- list(c("series", "server", "db", "transforms") ,names)
+
+  if (!all(is.na(append))) 
+    {if (is.null(append$series))     append$db <- ""
+     if (is.null(append$db))         append$db <- ""
+     if (is.null(append$transforms)) append$transforms <- ""
+     if (is.null(append$names))      append$names <- append$series
+     if(length(append$series) != length(append$names) )
+           stop("number of new names does not match number of new series.")
+     newr <- rbind(append$series, append$server, append$db, append$transforms)
+     newr <- cbind(r,newr)
+     dimnames(newr) <- list(c("series", "server", "db", "transforms") ,
+                            c(dimnames(r)[[2]], append$names))
+     attr(newr, "start")     <- attr(r, "start") 
+     attr(newr, "end")       <- attr(r, "end")
+     attr(newr, "frequency") <- attr(r, "frequency")
+     attr(newr, "pad.start") <- attr(r, "pad.start")
+     attr(newr, "pad.end")   <- attr(r, "pad.end")
+     attr(newr,"use.tframe") <- attr(r,"use.tframe")  
+
+     attr(newr, "start.server")   <- attr(r, "start.server")
+     attr(newr, "server.process") <- attr(r, "server.process")
+     attr(newr, "cleanup.script") <- attr(r, "cleanup.script")
+     attr(newr, "stop.on.error")  <- attr(r, "stop.on.error") 
+     attr(newr, "warn")           <- attr(r, "warn")  
+     class(newr) <- "tfPADIdata"
+     r <- newr
+    }
+   
+   if (!any(is.na(start)))          attr(r, "start")     <- start
+   if (!any(is.na(end)) )           attr(r, "end")       <- end
+   if (!    is.na(frequency))       attr(r, "frequency") <- frequency
+
+   if (!is.na(pad))            pad.start<- pad.end<- pad
+   if (!is.na(pad.start))      attr(r, "pad.start") <- pad.start
+   if (!is.na(pad.end))        attr(r, "pad.end")   <- pad.end
+   if (!is.na(use.tframe))     attr(r,"use.tframe") <- use.tframe 
+
+   if (!is.na(start.server))   attr(r, "start.server") <- start.server
+   if (!is.na(server.process)) attr(r, "server.process") <- server.process
+   if (!is.na(cleanup.script)) attr(r, "cleanup.script") <- cleanup.script
+   if (!is.na(stop.on.error))  attr(r, "stop.on.error") <- stop.on.error
+   if (!is.na(warn))           attr(r, "warn")      <- warn
+   r
+   }
+
+
+
+
+############################################################
+
+#     methods for tfPADIdata class objects <<<<<<<<<<
+
+# See also freeze.tfPADIdata and availability.tfPADIdata further below
+
+############################################################
+
+
+is.tfPADIdata <-function(obj) {inherits(obj, "tfPADIdata") }
+
+print.tfPADIdata <- function(x, ...)
+  {print.default(x)
+   invisible(x)
+  }
+
+start.tfPADIdata <- function(x)
+     {if(is.null(attr(x, "start"))) NA else attr(x, "start")}
+end.tfPADIdata   <- function(x)
+     {if(is.null(attr(x, "end")))   NA else attr(x, "end")}
+frequency.tfPADIdata <- function(x)
+     {if(is.null(attr(x, "frequency")))   NA else attr(x, "frequency")}
+periods.tfPADIdata <- function(data) NA  # could be better
+series.names.tfPADIdata <- function(data) {dimnames(data)[[2]]}
+# nseries default should work
+
+
+identifiers.tfPADIdata  <- function(obj)  {obj[1,]}
+sourceserver.tfPADIdata <- function(obj)  {obj[2,]}
+sourcedb.tfPADIdata     <- function(obj)  {obj[3,]}
+source.info.tfPADIdata  <- function(obj)  {attr(obj,"source")} #used by refresh
+
+
+"[.tfPADIdata" <- function (x, i, j, drop = FALSE) #N.B. FALSE
+   {a <- attributes(x)
+    y <- NextMethod("[")
+    a$dim      <- dim(y)
+    a$dimnames <- dimnames(y)
+    attributes(y) <- a
+    y
+   }
+
+tsp.tfPADIdata <-function(x)
+  {start. <-start(x)
+   end.   <-  end(x)
+   f <- frequency(x)
+   if (length(start.)==2) start. <- start.[1] + (start.[2]-1)/f
+   if (length(end.)==2)   end.   <- end.[1]   + (end.[2]-1)/f
+   c(start., end., f)
+  }
+
+ 
+
+############################################################
+
+#      Database interface for tfPADIdata  <<<<<<<<<<
+
+############################################################
+
+
+
+freeze.tfPADIdata <- function(data, timeout=60)
+{ # This function retreives data from a PADI server using getpadi
+  # A server specified as NULL or as "" is expanded to the localhost.
+
+   # next 3 lines are to look after older style name forms at the BOC
+   ets <- "ets" == substring(data["db",],1,3)
+   data["server", ets] <- "ets"
+   data["db",     ets] <- ""
+
+   data["server", data["server",] ==""] <- local.host.netname() 
+
+   # missing attr is NULL but should be translated to getpadi defaults:
+   IfNull <- function(a,b) {c(a,b)[1]}
+
+   r  <- getpadi( data["series",], server=data["server",], dbname=data["db",],
+     start.server=   IfNull(attr(data,"start.server"), T),
+     server.process= IfNull(attr(data,"server.process"), padi.server.process()),
+     cleanup.script= IfNull(attr(data,"cleanup.script"), padi.cleanup.script()),
+     starty= if(any(is.na(start(data)))) 0 else start(data)[1],
+     startm= if(any(is.na(start(data)))) 0 else start(data)[2],
+     endy=   if(any(is.na(end(data))))   0 else end(data)[1],
+     endm=   if(any(is.na(end(data))))   0 else end(data)[2],
+     transformations = data["transforms",],
+     pad  = (attr(data,"pad.start") | attr(data,"pad.end") ),
+     user =          IfNull(attr(data,"user"), user.name() ),
+     passwd=         IfNull(attr(data,"passwd"),       ""  ),
+     stop.on.error = IfNull(attr(data,"stop.on.error"), T  ),
+     use.tframe=     IfNull(attr(data,"use.tframe"),    F  ), 
+     warn=           IfNull(attr(data,"warn"),          T  ),
+     timeout= timeout)
+
+ if (is.character(r)) stop(r)
+ if (!attr(data,"pad.start")) r <- trim.na(r, start.=T, end.=F)
+ if (!attr(data,"pad.end") )  r <- trim.na(r, start.=F, end.=T)
+ if (dim(r)[2] != dim(data)[2]) stop("Error retrieving data.")
+ if ( !is.na(frequency(data)) && (frequency(data)) != frequency(r))
+       warning("returned data frequency differs from request.")
+ series.names(r) <- series.names(data)
+ attr(r, "source") <- data 
+ attr(r, "retrieval.date") <- date.parsed() 
+ r
+}
+
+availability.tfPADIdata<-function(data, verbose=T, timeout=60)  
+{# Indicate  dates for which data is available.
+ # This requires retrieving series individually so they are not truncated.
+
+   # next 3 lines are to look after older style name forms at the BOC
+   ets <- "ets" == substring(data["db",],1,3)
+   data["server", ets] <- "ets"
+   data["db",     ets] <- ""
+
+   data["server", data["server",] ==""] <- local.host.netname() 
+   series <- data["series", ]
+   s <- e <- f <- NULL
+   for (i in 1:length(series))
+     {r <- getpadi( series[i], server=data["server",i], dbname=data["db",i], 
+        start.server   = attr(data,"start.server"), 
+        server.process = attr(data,"server.process"),
+        cleanup.script = attr(data,"cleanup.script"),
+        starty=if(any(is.na(start(data)))) 0 else start(data)[1],
+        startm=if(any(is.na(start(data)))) 0 else start(data)[2],
+        endy=if(any(is.na(end(data))))  0 else end(data)[1],
+        endm=if(any(is.na(end(data))))  0 else end(data)[2],
+        transformations = data["transforms",i],
+        pad  = (attr(data,"pad.start") | attr(data,"pad.end")) ,
+        user =if(is.null(attr(data,"user"))) user.name() else attr(data,"user"),
+        passwd=if(is.null(attr(data,"passwd")))  ""    else attr(data,"passwd"),
+        stop.on.error = attr(data,"stop.on.error"),
+        use.tframe=attr(data,"use.tframe"), 
+        warn=attr(data,"warn"), timeout=timeout)
+
+       s <- rbind(s, start(r))
+       e <- rbind(e, end(r))
+       f <- c(f,frequency(r))
+       if (verbose)
+         {cat(series[i]," from: ",start(r))
+          cat("  to: ",end(r))
+          cat("   frequency ", frequency(r))
+          cat("  ",series.names(data)[i])
+          cat("\n")
+      }  }
+  invisible(list(start=s, end=e, frequency=f, series=series))
+}
+
+
+
+tfputpadi  <- function (data,  
+         server = local.host.netname(),
+         dbname = "", 
+         series = series.names(data),
+         start.server = T,
+         server.process = padi.server.process(), 
+         cleanup.script = padi.cleanup.script(),
+         user = user.name(), passwd= "",
+         stop.on.error = T, warn = T)   
+  {# This is just putpadi with a tfPADIdata object returned suitable for 
+   #   retrieving the data.
+
+   ok <- putpadi(data, server=server, dbname=dbname, series=series,
+         start.server = start.server, server.process=server.process, 
+         cleanup.script=cleanup.script,
+         user=user, passwd=passwd,
+         stop.on.error=stop.on.error, warn=warn ) 
+
+   if (!all(ok)) stop("error putting data on database.")
+  
+   tfPADIdata( series, server=server, db=dbname, transforms="",  
+           start=start(data), end=end(data), frequency=frequency(data), 
+           names=series, pad=FALSE, 
+           use.tframe=T, stop.on.error=stop.on.error, warn=warn)
+  }
+
+
+#   The following function is supplied separately (with PADI ). The 
+#   documentation is included here so it will integrate with DSE.
+
+#######################################################################
+
+#     functions for converting defunct format FAMEdata structure
+#         (these are primarily for use at the BOC)
+
+#######################################################################
+
+freeze.FAMEdata <-function(data)
+  {stop("FAMEdata is defunct. Use FAMEdata.to.tfPADIdata to convert the structure")}
+
+
+#######################################################################
+
+
+#######################################################################
+
+#    tfPADI interface tests (from Brief User's Guide)   <<<<<<<<<<
+
+#######################################################################
+
+
+tfPADI.function.tests <- function( verbose=T, synopsis=T,
+      fuzz.small=1e-14, fuzz.large=1e-6)
+{# test for TSPADI access using simple.server
+
+ # These tests only check that the tfPADI structures work. For a more
+ #   complete set of PADI tests see the file padi.s distributed 
+ #   with the TS PADI software.
+
+
+  if (synopsis & !verbose) cat("tfPADI tests ...")
+
+  scratch.db <-"zot123456.db"
+  unlink(scratch.db)
+  server <- local.host.netname()
+
+ if (verbose) cat("tfPADI test 0 ... ")
+  if (check.padi.server(server))
+     stop("A server is already running. Testing stopped. Use cleanup.padi.server() or kill.padi.server() to terminate it.")
+
+  pid <- start.padi.server(server=server, dbname="", 
+                 server.process=paste("simple.server ", scratch.db))
+  on.exit(cleanup.padi.server(pid, cleanup.script="cleanup.simple.server"))
+
+  # wait to ensure padi server is started
+     for (i in 1:30)
+       {if (check.padi.server(server)) break
+        sleep(1)
+       }
+  all.ok <- ok <- T
+  if (verbose) 
+    {if (ok) cat("ok\n")
+     else  cat("failed! starting server\n")
+    }
+
+
+  if (verbose) cat("tfPADI test 1 ... ")
+
+  eg.put.data <- tframed(matrix(c(1*exp(1:20),2*exp(1:20)),20,2), 
+                         list(start=c(1950,1),freq=1))
+  series.names(eg.put.data) <- c("exp1", "exp2")
+
+  if (any(series.names(eg.put.data) != c("exp1", "exp2")))
+    stop("series.name setting is not working properly. Other tests will fail.")
+
+  eg.names <- tfputpadi(eg.put.data,
+                      dbname=scratch.db, server=server,
+                      start.server=T, server.process="simple.server", 
+                      cleanup.script="cleanup.simple.server",
+                      stop.on.error=T, warn=T )
+  ok<-is.tfPADIdata(eg.names) 
+  all.ok <- ok
+  if (verbose) 
+    {if (ok) cat("ok\n")
+     else  cat("failed! tfputpadi\n")
+    }
+
+  if (verbose) cat("tfPADI test 2 ... ")
+  eg.data <- freeze(eg.names)
+  ok <- is.tfPADIdata(eg.names) &
+            test.equal(eg.data, eg.put.data, fuzz=fuzz.large)
+  all.ok <- all.ok & ok 
+  if (verbose) {if (ok) cat("ok\n")  else cat("failed!\n") }
+
+
+  on.exit()
+  cleanup.padi.server(pid, cleanup.script="cleanup.simple.server")
+
+  if (synopsis) 
+    {if (verbose) cat("All tfPADI tests completed")
+     if (all.ok) cat(" OK\n") else cat(", some FAILED!\n")
+    }
+
+  invisible(all.ok)
+}

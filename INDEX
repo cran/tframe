@@ -10,7 +10,7 @@ freeze                   Get fixed data snapshot
 freeze.tfPADIdata        Get fixed data snapshot
 getpadi                  Get Data from TSPADI Database Interface
 identifiers              Get Identifiers from a data object
-is.consistent.tframe     Check for a Consistent tframe
+is.consistent.tframe     is.consistent.tframe
 lag                      Misc Generic Replacements
 modify                   modify a database descriptor object
 modify.tfPADIdata        modify a database descriptor object
@@ -30,8 +30,8 @@ tfPADI.function.tests    Function Tests for tfPADI
 tfPADIdata               make tfPADIdata object
 tfprint                  Print and Plot Tframed Objects
 tfputpadi                Write Data to a Data Server
-tframe                   Extract or Set a Tframe
 tframe.function.tests    tframe.function.tests
+tframe                   Extract or Set a Tframe
 tframed                  Construct a Tframed Object
 tfwindow                 Truncate a Time Series
 time                     Time

@@ -1,9 +1,9 @@
-Version: R2000.6-1
-License: Free. See the LICENCE file for details.
-Author: 'Paul Gilbert <pgilbert@bank-banque-canada.ca>'.
-URL: http://www.bank-banque-canada.ca/pgilbert
-Package: tframe
 Title: Time Frame coding kernel
+Package: tframe
+Version: 2000.4-1
+Author: 'Paul Gilbert <pgilbert@bank-banque-canada.ca>'.
 Description: Functions for writing code that 
  is independent of the representation of time.
 Depends: syskern,  R (>= 1.0.1)
+License: Free. See the LICENCE file for details.
+URL: http://www.bank-banque-canada.ca/pgilbert
