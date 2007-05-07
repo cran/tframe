@@ -1,0 +1,58 @@
+\documentclass[english]{article}
+\begin{document}
+
+%\VignetteIndexEntry{tframe Guide}
+\SweaveOpts{eval=TRUE,echo=TRUE,results=hide,fig=FALSE}
+\begin{Scode}{echo=FALSE,results=hide}
+ options(continue="  ")
+\end{Scode}
+
+\section{tframe Functions}
+
+The functions in this package are made available with
+
+\begin{Scode}
+library("tframe")  
+\end{Scode}
+
+The code from the vignette that generates this guide can 
+be loaded into an editor with \emph{edit(vignette("tframe"))}.
+This uses the default editor, which can be changed using \emph{options()}.
+It should be possible to view the pdf version of this 
+package guide with \emph{print(vignette("tframe"))}.
+
+The main functions in this package that might be called directly by users are
+\emph{tfplot}, \emph{diffLog}, \emph{percentChange}, \emph{trimNA} and
+\emph{tsScan}. See the help for more details and examples.
+
+
+The \emph{tframe} functions are programming utilities used by other packages.
+For example, packages \emph{dse},\emph{tsfa},\emph{TSdbi} use this set of 
+utilities.
+The object of these functions is to be able to write code with
+\emph{tframe(y) <- tframe(x)}, to assign the time attributes (tframe) of
+\emph{x} to \emph{y}, without needing to handle details of the time 
+representation and without concern for the number of series in \emph{x} 
+and \emph{y}, which need not be the same. A check is made to ensure the number of periods in the
+data correspond with the number implied by the tframe.
+
+
+The hope is that this is done in a 
+way that allows easy extention in the future. That is, code using \emph{tframe}
+should not need to be changed if some data has a newly introduce time 
+representation. This may require some changes to tframe itself, but the design 
+should usually allow new representations to be accommodated by additional 
+methods for those representation.
+
+There is an attempt to use the same time representation for \emph{y} 
+as \emph{x} has (e.g. ts, zoo, its), but this cannot be guaranteed 
+because \emph{y} may not be 
+representable using the \emph{x} represnetation. For example, \emph{x} 
+might be an "mts" constructed with \emph{ts()} whereas \emph{y} is a 
+list with some data structures. In this case, a "pure tframe" approach 
+is used.
+
+The main programing utilities are \emph{tframe} and \emph{tframe<-}.
+For additinal details see the help for these and \emph{tframe-package}.
+\end{document}
+

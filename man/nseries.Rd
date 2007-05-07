@@ -5,19 +5,23 @@
 \title{Number of Series}
 \description{Return the number of series.}
 \usage{
-	nseries(x)}
+    nseries(x)
+    \method{nseries}{default}(x)
+    }
 
-\arguments {
-	\item{x}{A time series object.}
+\arguments{
+    \item{x}{A time series object.}
 }
 \value{An integer.}
 \details{
-	Generic method to return the number of series.
+    Generic method to return the number of series.
 }
 
 \examples{
-	nseries(tsmatrix(rnorm(100,20,5)))
+    nseries(tbind(rnorm(100,20,5)))
 }
-\keyword{tframe}
+\keyword{programming}
+\keyword{utilities}
 \keyword{ts}
+
 

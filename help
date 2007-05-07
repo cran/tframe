@@ -1,0 +1,27 @@
+ >>> Building/Updating help pages for package 'tframe'
+     Formats: text html latex example 
+  00tframe.Intro                    text    html    latex
+  addDate                           text    html    latex   example
+  checktframeConsistent             text    html    latex   example
+  classed                           text    html    latex
+  diffLog                           text    html    latex   example
+  earliestEnd                       text    html    latex   example
+  nseries                           text    html    latex   example
+  percentChange                     text    html    latex   example
+  selectSeries                      text    html    latex   example
+  seqN                              text    html    latex
+  seriesNames                       text    html    latex   example
+  splice                            text    html    latex   example
+  tbind                             text    html    latex   example
+  testEqual                         text    html    latex   example
+  testEqualtframes                  text    html    latex   example
+  tfExpand                          text    html    latex   example
+  tfL                               text    html    latex   example
+  tfplot                            text    html    latex   example
+  tfprint                           text    html    latex   example
+  tframe                            text    html    latex   example
+  tfspan                            text    html    latex   example
+  tfstart                           text    html    latex   example
+  tfwindow                          text    html    latex   example
+  trimNA                            text    html    latex   example
+  tsScan                            text    html    latex   example

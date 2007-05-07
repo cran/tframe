@@ -1,0 +1,48 @@
+
+                 CHANGES IN TFRAME VERSION 2007.5-1
+
+Changes (Possibly) Affecting Users
+
+    o  the function freeze was moved from tframe to TSpadiFame.
+
+    o  tfplot and tfOnePlot were changed to call plot in place of
+      matplot, so x scale for zoo time series works better.
+
+    o  xlab was modified to allow vector argument specifying label
+       for each plot.
+
+    o  methods for zoo and its were added.
+
+    o  tbind was modified to handle a possible NULL first argument,
+        in order to make initialization for use in a loop easier.
+
+    o  as.tframe was added to generate a tframe using start, end, 
+        frequency, periods.
+
+    o  as.tframed was added to gaurantee an object is tframed.
+
+    o  arguments start, end, and ... were added to tframed so it can be
+       used more easily to generate default ts like time series.
+
+    o  annualizedGrowth utility for calculating annualized growth  
+       of a time series was added.
+
+    o  tfL utility for shifting a tframe or tframed data was added.
+       For data this is equivalent to lag but the default is to lag the data.
+
+    o  tfdiff methods were replaced diff.tframe and diff.tframed.
+
+    o  added utilities tsWrite and tsScan for reading and writing 
+       time series (csv) data files (wrappers for scan and write).
+
+ 
+Changes Affecting Development
+
+    o  tfSet was (re) introduced, as switching the dispatch order for tframe<-
+      seems to be a much cleaner approach.
+
+
+         CHANGES IN EARLIER TFRAME VERSIONS
+
+The tframe package was previously part of the dse bundle. Earlier changes are
+documented in the NEWS for the dse bundle.
