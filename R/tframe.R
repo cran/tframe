@@ -169,6 +169,7 @@ tfOnePlot <- function(x, tf=tframe(x), start=tfstart(tf), end=tfend(tf),
      if(is.null(ylab)) ylab <- paste(seriesNames(x), collapse="  ")
      if(is.null(ylim)) ylim <- range(x, na.rm=TRUE)
      tline <- time(x)
+     if( inherits(tline, "ts")) tline <- unclass(tline)
      # formerly matplot with tline not a matrix was used, but this does
      # not plot (non-ts) dates as well as plot.
      N <- nseries(x)
