@@ -751,7 +751,7 @@ annualizedGrowth.default <- function(obj, lag=1, freqLagRatio=frequency(obj)/lag
 
 
 nseries <- function(x) UseMethod("nseries") 
-nseries.default <- function(x)  {if (is.matrix(x)) ncol(x) else 1} 
+nseries.default <- function(x)   if (is.null(x)) 0 else NCOL(x)
 
    
 
@@ -896,13 +896,13 @@ tsWrite <- function(x, file="data", header=TRUE, sep=",", digits=16)
     # write file with (default one) title line. 
     # then data in three columns (efault separated with commas):
     #   year, period, data[;1], data[;2], ...
-    x <- as.matrix(x)
     if (header) write(paste("year", "period", 
                    paste(seriesNames(x), collapse=sep),sep=sep), file=file)
     yr  <- floor(time(x))
     pr  <- 1+ (time(x) %% 1) * frequency(x)
     dg <- options(digits=digits)
     on.exit(options(dg))
+    x <- as.matrix(x)
     write(t(cbind(yr, pr, x)), file=file, ncolumns = 2 + ncol(x), sep=sep, append=header)
     }
 

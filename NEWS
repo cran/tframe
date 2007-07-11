@@ -1,4 +1,12 @@
 
+                 CHANGES IN TFRAME VERSION 2007.x-x
+
+Changes (Possibly) Affecting Users
+
+    o  fixed bug in tsWrite which lost date.
+    
+    o  default nseries changed to return zero for NULL
+
                  CHANGES IN TFRAME VERSION 2007.5-1
 
 Changes (Possibly) Affecting Users
