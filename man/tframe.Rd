@@ -4,16 +4,12 @@
 \alias{tframe}
 \alias{tframe.default}
 \alias{tframe.ts}
-\alias{tframe.zoo}
-\alias{tframe.its}
 
 \alias{tframe<-}
 \alias{tfSet}
 \alias{tfSet.default}
 \alias{tfSet.list}
 \alias{tfSet.tstframe}
-\alias{tfSet.itstframe}
-\alias{tfSet.zootframe}
 
 \alias{tframed}
 \alias{tframed.default}
@@ -30,16 +26,12 @@
     tframe(x)
     \method{tframe}{default}(x)
     \method{tframe}{ts}(x)
-    \method{tframe}{zoo}(x)
-    \method{tframe}{its}(x)
 
     tframe(x) <- value
     tfSet(value, x) 
     \method{tfSet}{default}(value, x) 
     \method{tfSet}{list}(value, x) 
     \method{tfSet}{tstframe}(value, x) 
-    \method{tfSet}{zootframe}(value, x) 
-    \method{tfSet}{itstframe}(value, x) 
 
     tframed(x, tf=NULL, names = NULL, ...)
     \method{tframed}{default}(x, tf = NULL, names = NULL, start=NULL, end=NULL, ...)

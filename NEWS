@@ -1,7 +1,12 @@
 
-                 CHANGES IN TFRAME VERSION 2007.x-x
+                 CHANGES IN TFRAME VERSION 2008.5-1
 
 Changes (Possibly) Affecting Users
+
+    o  splits extensions for zoo and its as well as some new/experimental/less 
+       stable pieces into package tframePlus.
+
+    o  fixed bug in tfExpand which lost multivariate series.
 
     o  fixed bug in tsWrite which lost date.
     
@@ -11,7 +16,7 @@ Changes (Possibly) Affecting Users
 
 Changes (Possibly) Affecting Users
 
-    o  the function freeze was moved from tframe to TSpadiFame.
+    o  the function freeze was moved from tframe to TSpadiFame (renamed TSpadi).
 
     o  tfplot and tfOnePlot were changed to call plot in place of
       matplot, so x scale for zoo time series works better.

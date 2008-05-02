@@ -80,7 +80,7 @@ tfL <- function(x, p=1) UseMethod("tfL")
 tfL.tframe <- function(x, p=1){ x + (p/x[3]) * c(1, 1, 0)}
 
 tfL.default <- function(x, p=1){
-    tframe(x) <- tfL(tframe(x), p=p)
+    tframe(x) <- tfL(tframe(as.ts(x)), p=p)
     x} 
 
 
@@ -653,7 +653,7 @@ tfExpand <- function(x, add.start=0, add.end=0) UseMethod("tfExpand")
 
 tfExpand.default <- function(x, add.start=0, add.end=0)
     {tf <- tfExpand(tframe(x), add.start=add.start, add.end=add.end)
-     selectSeries(tbind(x,time(tf)), series=1)
+     selectSeries(tbind(x, time(tf)), series = -(nseries(x)+1))
     }
 
 
@@ -737,7 +737,7 @@ annualizedGrowth <- function(obj, ...) UseMethod("annualizedGrowth")
 
 annualizedGrowth.default <- function(obj, lag=1, freqLagRatio=frequency(obj)/lag,
         names=paste("Annual Growth of", seriesNames(obj)), ...) {
-  r <- 100*((obj/tfL(obj, p= lag))^freqLagRatio - 1)
+  r <- 100*((as.ts(obj)/tfL(as.ts(obj), p= lag))^freqLagRatio - 1)
   if(is.null(options()$ModSeriesNames) || options()$ModSeriesNames)
         seriesNames(r) <- names
   r

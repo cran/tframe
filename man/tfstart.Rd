@@ -3,20 +3,12 @@
 \alias{tfstart}
 \alias{tfstart.default}
 \alias{tfstart.tstframe}
-\alias{tfstart.zoo}
-\alias{tfstart.its}
-\alias{tfstart.zootframe}
-\alias{tfstart.itstframe}
 \alias{start.tframed}
 \alias{start.tframe}
 
 \alias{tfend}
 \alias{tfend.default}
 \alias{tfend.tstframe}
-\alias{tfend.zoo}
-\alias{tfend.its}
-\alias{tfend.zootframe}
-\alias{tfend.itstframe}
 \alias{end.tframed}
 \alias{end.tframe}
 
@@ -28,20 +20,16 @@
 \alias{tfperiods}
 \alias{tfperiods.default}
 \alias{tfperiods.stamped}
-\alias{tfperiods.zoo}
 \alias{periods}
 \alias{periods.default}
 \alias{periods.tframed}
 \alias{periods.tframe}
-\alias{periods.zootframe}
-\alias{periods.itstframe}
 
 
 \alias{tftime}
 \alias{tftime.default}
 \alias{time.tframed}
 \alias{time.tframe}
-\alias{time.its}
 
 \title{Extract Time Frame Information}
 \description{Functions for extracting time frame information.}
@@ -52,20 +40,12 @@
     tfstart(x)
     \method{tfstart}{default}(x)
     \method{tfstart}{tstframe}(x)
-    \method{tfstart}{zoo}(x)
-    \method{tfstart}{its}(x)
-    \method{tfstart}{zootframe}(x)
-    \method{tfstart}{itstframe}(x)
 
     \method{end}{tframed}(x, ...)
     \method{end}{tframe}(x, ...)
+    \method{tfend}{tstframe}(x)
     tfend(x)
     \method{tfend}{default}(x)
-    \method{tfend}{tstframe}(x)
-    \method{tfend}{zoo}(x)
-    \method{tfend}{its}(x)
-    \method{tfend}{zootframe}(x)
-    \method{tfend}{itstframe}(x)
 
     \method{frequency}{tframed}(x, ...)
     \method{frequency}{tframe}(x, ...)
@@ -79,11 +59,9 @@
     tfperiods(x)
     \method{tfperiods}{default}(x)
     \method{tfperiods}{stamped}(x)
-    \method{tfperiods}{zoo}(x)
 
     \method{time}{tframed}(x, ...)
     \method{time}{tframe}(x, ...)
-    \method{time}{its}(x, ...)
     tftime(x)
     \method{tftime}{default}(x)
     \method{time}{tframed}(x, ...)

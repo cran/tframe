@@ -3,8 +3,6 @@
 \alias{tfwindow.default}
 \alias{tfwindow.ts}
 \alias{tfwindow.tframe}
-\alias{tfwindow.zoo}
-\alias{tfwindow.its}
 
 \title{Truncate a Time Series}
 \description{Truncate a time series object to a time window.}
@@ -13,8 +11,6 @@
     \method{tfwindow}{default}(x, tf=NULL, start=tfstart(tf), end=tfend(tf), warn=TRUE)
     \method{tfwindow}{ts}(x, tf=NULL, start=tfstart(tf), end=tfend(tf), warn=TRUE)
     \method{tfwindow}{tframe}(x, tf=NULL, start=tfstart(tf), end=tfend(tf), warn=TRUE)
-    \method{tfwindow}{zoo}(x, tf=NULL, start=tfstart(tf), end=tfend(tf), warn=TRUE)
-    \method{tfwindow}{its}(x, tf=NULL, start=tfstart(tf), end=tfend(tf), warn=TRUE)
     }
 
 \arguments{
