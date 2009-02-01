@@ -1,4 +1,27 @@
 
+                 CHANGES IN TFRAME VERSION 2009.02-1
+
+
+  o Cleaned up tframe so that data classes are not defined unless absolutely
+     necessary. Tframe now attempts to use methods from the data classes 
+     where possible. (Classes for the tframe objects are still set when the 
+     tframe is not attached to data.)
+
+  o Also, in line with trying to use methods for existing classes, 
+      seriesNames() now uses dimnames[[2]] for matrices, and a class method if
+      that is available. A "seriesNames" attribute is still set if there is
+      no class methods available, as for vectors.
+
+  o Removed a try-error check for a condition that would never happen.
+
+  o Minor documentation corrections as found by a new R-devel.
+
+ 
+Changes Affecting Development
+
+    o Made DESCRIPTION a file rather than building it.
+
+
                  CHANGES IN TFRAME VERSION 2008.5-1
 
 Changes (Possibly) Affecting Users

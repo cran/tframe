@@ -78,6 +78,9 @@ S3method("tframed","default")
 
 export("is.tframe")
 export("is.tframed")
+S3method("is.tframed","default")
+S3method("is.tframed","ts")
+
 export("tfspan")
 
 export("tfplot")

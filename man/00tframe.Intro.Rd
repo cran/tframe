@@ -14,7 +14,7 @@
 \details{
 The \pkg{tframe} package provides a kernel of functions for programming time series 
 methods in a way that makes them relatively independently of the representation 
-of time. pkg{tframe} is intended to make it easier to write code which can 
+of time. \pkg{tframe} is intended to make it easier to write code which can 
 use any new/better 
 time representations when they appear. It also provides plotting, time 
 windowing, and some other utility functions which are specifically intended 

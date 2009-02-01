@@ -50,23 +50,30 @@ tfperiods <- function(x) UseMethod("tfperiods")
 #programming method with tfstart(NULL) returning NULL (which start does not).
 tfstart.default     <- function(x) 
   {if (is.null(x)) return(NULL) else
-   if (!is.tframe(x)) x <- tframe(x)
-   c(floor(x[1]), round(1 +(x[1]%%1)*x[3]))
+   #if (!is.tframe(x)) x <- tframe(x)
+   #c(floor(x[1]), round(1 +(x[1]%%1)*x[3]))
+   if (is.tframe(x)) c(floor(x[1]), round(1 +(x[1]%%1)*x[3]))
+   else start(x)
   }
 tfend.default       <- function(x)
   {if (is.null(x)) return(NULL) else
-   if (!is.tframe(x)) x <- tframe(x)
-   c(floor(x[2]), round(1 + (x[2]%%1)*x[3]))
+   #if (!is.tframe(x)) x <- tframe(x)
+   #c(floor(x[2]), round(1 + (x[2]%%1)*x[3]))
+   if (is.tframe(x)) c(floor(x[2]), round(1 + (x[2]%%1)*x[3]))
+   else end(x)
   }
 tffrequency.default <- function(x)
   {if (is.null(x)) return(NULL) else
-   if (!is.tframe(x)) x <- tframe(x)
-   x[3]
+   #if (!is.tframe(x)) x <- tframe(x)
+   #x[3]
+   if (is.tframe(x)) x[3] else frequency(x)
   }
 tftime.default      <- function(x)
   {if (is.null(x)) return(NULL) else
-   if (!is.tframe(x)) x <- tframe(x)
-   tframed(x[1]+(seq(periods(x))-1)/x[3], tf=x)
+   #if (!is.tframe(x)) x <- tframe(x)
+   #tframed(x[1]+(seq(periods(x))-1)/x[3], tf=x)
+   if (is.tframe(x)) tframed(x[1]+(seq(periods(x))-1)/x[3], tf=x)
+   else time(x)
   }
 tfperiods.default   <- function(x)
   {if (is.null(x)) return(NULL) else
@@ -116,12 +123,14 @@ tfplot.default <- function(x, ..., tf=tfspan(x , ...), start=tfstart(tf), end=tf
        lty = 1:5, lwd = 1, pch = NULL, col = 1:6, cex = NULL,
        xlab=NULL, ylab=seriesNames(x), xlim = NULL, ylim = NULL,
        graphs.per.page=5, par=NULL, mar=par()$mar, reset.screen=TRUE)
- {#  ... before other args means abbreviations do not work, but otherwise
-  # positional matching seems to kick in and an object to be plotted gets used
-  #  for start.
-  if (!is.tframed(x)) UseMethod("plot")
-  else
-    {if(inherits(x, "TSmodel"))
+    {#  ... before other args means abbreviations do not work, but otherwise
+     # positional matching seems to kick in and an object to be plotted gets used
+     #  for start.
+     if (!is.tframed(x)) {
+       if (is.matrix(x) || is.vector(x)) x <- ts(x)
+       else return(plot(x))
+       }
+     if(inherits(x, "TSmodel"))
         stop("tfplot does not know how to plot a model. ",
              "Consider simulating the model: tfplot(simulate(model)) ",
              "or evaluating the model with data: tfplot(l(model, data)).")
@@ -154,7 +163,7 @@ tfplot.default <- function(x, ..., tf=tfspan(x , ...), start=tfstart(tf), end=tf
         if(!is.null(Title) && (i==1) && (is.null(options()$PlotTitles)
                 || options()$PlotTitles)) title(main = Title)
 	}
-    }
+    
   invisible()
  }
 
@@ -237,7 +246,11 @@ tfwindow.tframe <- function(x, tf=NULL, start=tfstart(tf), end=tfend(tf), warn=T
 
 ################################################
 is.tframe <- function(x) inherits(x, "tframe")
-is.tframed <- function(x) inherits(tframe(x), "tframe")
+#is.tframed <- function(x) inherits(tframe(x), "tframe")
+is.tframed <- function(x) UseMethod("is.tframed")
+is.tframed.default <- function(x) {!is.null(tsp(x))}
+
+
 # above does not distinguish "true" tframed objects since tframe(x) needs
 # to try very hard to return tframes from ts and old tsp objects.
 #is.Ttframed <- function(x) {!is.null(attr(x, "tframe"))}
@@ -248,6 +261,7 @@ tframe <- function(x) UseMethod("tframe")
 tframe.default <- function(x){ #extract the tframe
   if(is.null(x)) NULL
   else if(is.tframe(x)) x   
+  else if(!is.tframed(x)) NULL   
   #else if(is.tframed(x)) tframe(x)  this causes recursion. instead use
   else if (!is.null(attr(x, "tframe"))) attr(x, "tframe") # extractor
   else if (!is.null(tsp(x)))	classed(tsp(x), "tframe") # extractor
@@ -290,13 +304,18 @@ as.tframe <- function(...) #constructor
  
 
 "tframe<-" <- function(x, value) 
-  {if(is.null(value))
-    {attr(x, "tframe") <- NULL
-     class(x) <- class(x)[class(x) != "tframed"]
-     return(x)
-    } 
-   else tfSet(value, x) 
+  {if(is.null(value)) tfUnSet(x) else tfSet(value, x) 
   }
+
+tfUnSet <- function(x) UseMethod("tfUnSet") # for NULL value
+tfUnSet.default <- function(x) {
+     # this is for unusual cases that actually are tframed class
+     attr(x, "tframe") <- NULL
+     class(x) <- class(x)[class(x) != "tframed"]
+     # this is for old tsp cases
+     tsp(x) <- NULL
+     x
+    } 
 
 tfSet <- function(value, x) UseMethod("tfSet") # dispatch on value
 
@@ -326,37 +345,38 @@ tfSet <- function(value, x) UseMethod("tfSet") # dispatch on value
 
 tfSet.list <- function(value, x) {
   if(!is.tframe(value)) {
+      # If value is not a tframe then only ts is attempted
       # do.call does not seem to work when x is passed as NULL 
       if(is.null(value$start) & is.null(value$end))
                         stop("Could not determine a tframe from value.")
-      value <- as.tframe(start=value$start, end=value$end, 
-                        frequency=value$frequency, periods=periods(x))
+      #value <- as.tframe(start=value$start, end=value$end, 
+      #                  frequency=value$frequency, periods=periods(x))
+      return(tfSet.tstframe(value, x))
       }
-  if(! is.tframe(value)) stop("Could not determine a tframe from value.")
-  # next is checking after the fact, but value may just be start and freq
-  #  which is not enough to know periods
-  attr(x, "tframe") <- value
-  if((!is.null(value)) && !checktframeConsistent(tframe(x), x))
-     stop("time frame value in tframe assignment is not consistent with data.")
-  classed(x, c(class(x), "tframed"))
+  #  if(! is.tframe(value)) stop("Could not determine a tframe from value.")
+  #  # next is checking after the fact, but value may just be start and freq
+  #  #  which is not enough to know periods
+  #  attr(x, "tframe") <- value
+  #  if((!is.null(value)) && !checktframeConsistent(tframe(x), x))
+  #     stop("time frame value in tframe assignment is not consistent with data.")
+  stop("stopped in tfSet.list")  #classed(x, c(class(x), "tframed"))
 }
 
 tfSet.default <- function(value, x) {
-  if(is.numeric(value && (length(value) == 3))) {
-      # try to make tsp into a tstframe
-      z <- ts(1:periods(x))
-      tsp(z) <- value
-      value <- tframe(z)
+  if(  is.tframed(value)) return( tfSet(tframe(value), x)) #recall  
+  if(is.numeric(value) && (length(value) == 3)) {
+      # assuming tsp 
+      tsp(x) <- value
+      return(x)
       }
-  if(  is.tframed(value)) value <- tframe(value)  
-  if(! is.tframe(value))  value <- as.tframe(value)  
-  if(! is.tframe(value)) stop("Could not determine a tframe from value.")
-  # next is checking after the fact, but value may just be start and freq
-  #  which is not enough to know periods
-  attr(x, "tframe") <- value
-  if((!is.null(value)) && !checktframeConsistent(tframe(x), x))
-     stop("time frame value in tframe assignment is not consistent with data.")
-  classed(x, c(class(x), "tframed"))
+#  if(! is.tframe(value))  value <- as.tframe(value)  
+#  if(! is.tframe(value)) stop("Could not determine a tframe from value.")
+#  # next is checking after the fact, but value may just be start and freq
+#  #  which is not enough to know periods
+#  attr(x, "tframe") <- value
+#  if((!is.null(value)) && !checktframeConsistent(tframe(x), x))
+#     stop("time frame value in tframe assignment is not consistent with data.")
+  stop("stopped in tfSet.default. Should never be here.")  #  classed(x, c(class(x), "tframed"))
 }
 
 # making tframed generic allows tframed.TSdata to specify input and output names
@@ -626,7 +646,8 @@ splice.default <- function(mat1, mat2, ...)
 }
 
 
-tfTruncate <- function(x, start=NULL, end=NULL) UseMethod("tfTruncate")
+tfTruncate <- function(x, start=NULL, end=NULL) 
+    if(is.null(x)) return(NULL) else UseMethod("tfTruncate")
   # similar to window but start and end specify periods relative to the 
   #   beginning (eg x[start:end] for a vector).
   #   NULL means no truncation.
@@ -647,7 +668,8 @@ tfTruncate.default <- function(x, start=NULL, end=NULL)
      z
     }
 
-tfExpand <- function(x, add.start=0, add.end=0) UseMethod("tfExpand")
+tfExpand <- function(x, add.start=0, add.end=0)  
+    if(is.null(x)) return(NULL) else UseMethod("tfExpand")
   # expand (a tframe) by add.start periods on the beginning
   # and add.end periods on the end
 
@@ -760,20 +782,24 @@ nseries.default <- function(x)   if (is.null(x)) 0 else NCOL(x)
 
  seriesNames.default <- function(x) {
     if (is.null(x)) return(NULL)
-    names <- attr(x, "seriesNames")
-    if (is.null(names)) names <- dimnames(x)[[2]]
-    if (is.null(names)) names <- paste("Series", seq(ncol(x)))
+    else names <- if (is.matrix(x)) dimnames(x)[[2]] else attr(x, "seriesNames")
+    if (is.null(names)) names <- paste("Series", seq(NCOL(x)))
     names
     }
 
 "seriesNames<-.default" <- function(x, value) {
-   if (!is.null(value)) {
+   if (is.null(value)) {
+      if (is.matrix(x)) dimnames(x)[[2]] <- NULL
+      attr(x,"seriesNames") <- NULL
+      }      
+   else {
       if (mode(value) != "character") value <- seriesNames(value)
       if (length(value) != nseries(x))
          stop("length of names (",length(value),
 	      ") does not match number of series(",nseries(x),").")
+      if (is.matrix(x)) dimnames(x) <- list(dimnames(x)[[1]], value)
+      else attr(x,"seriesNames") <- value
       }
-   attr(x,"seriesNames")<-value
    x
    }
 

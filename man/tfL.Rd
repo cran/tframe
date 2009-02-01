@@ -47,7 +47,7 @@
    Differencing methods create a time frame or time framed object 
    by differencing the number 
    of times indicated by \code{differences} at a lagged number of periods indicated 
-   by \code{lag}. (Positive values of code{lag} indicate number of periods back.)
+   by \code{lag}. (Positive values of \code{lag} indicate number of periods back.)
    The default is take the difference from data one period previous.
    See \code{\link[base]{diff}} for more details, but note that the result when 
    applied to a time frame is a time frame, not a series.

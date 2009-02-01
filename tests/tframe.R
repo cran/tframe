@@ -14,7 +14,8 @@ synopsis <- TRUE
   all.ok <-  TRUE
   if (synopsis & !verbose) cat("All tframe tests ...")
   if (verbose) cat("tframe test 1 ... ")
-  tspvector <- tframed(1:100, list(start=c(1981,3), frequency=4))
+  #tspvector <- tframed(1:100, list(start=c(1981,3), frequency=4))
+  tspvector <- ts(1:100, start=c(1981,3), frequency=4)
   dat <- matrix(rnorm(300),100,3)
   tframe(dat) <- tframe(tspvector)
   ok <- is.tframed(dat)
@@ -49,7 +50,8 @@ synopsis <- TRUE
   if (verbose) {if (ok) cat("ok\n") else cat("failed!\n") }
 
   if (verbose) cat("tframe test 7 ... ")
-  z <- tframed(dat, list(start=c(1961,2), frequency=12) )
+  #z <- tframed(dat, list(start=c(1961,2), frequency=12) )
+  z <- ts(dat, start=c(1961,2), frequency=12) 
   ok <- is.tframed(z)
   all.ok <- all.ok & ok 
   if (verbose) {if (ok) cat("ok\n") else cat("failed!\n") }
@@ -68,7 +70,8 @@ synopsis <- TRUE
   if (verbose) {if (ok) cat("ok\n") else cat("failed!\n") }
 
   if (verbose) cat("tframe test 10... ")
-  dat <- tframed(matrix(rnorm(300),100,3), list(start=c(1961,1), frequency=12))
+  #dat <- tframed(matrix(rnorm(300),100,3), list(start=c(1961,1), frequency=12))
+  dat <- ts(matrix(rnorm(300),100,3), start=c(1961,1), frequency=12)
   z   <- tfwindow(dat, start=c(1963,2))
   zz  <- dat
   zz  <- tfwindow(zz, start=c(1963,2))
@@ -99,7 +102,8 @@ synopsis <- TRUE
   if (verbose) {if (ok) cat("ok\n") else cat("failed!\n") }
 
   if (verbose) cat("tframe test 13... ")
-  dat <- tframed(matrix(rnorm(300),100,3), list(start=c(1961,1), frequency=12))
+  #dat <- tframed(matrix(rnorm(300),100,3), list(start=c(1961,1), frequency=12))
+  dat <- ts(matrix(rnorm(300),100,3), start=c(1961,1), frequency=12)
   z <- tfwindow(dat, start=c(1963,2), end=c(1969,1))
   ok <-      all(start(dat)== earliestStart(dat, z))
   ok <- ok & all(    end(z) == earliestEnd  (dat, z))

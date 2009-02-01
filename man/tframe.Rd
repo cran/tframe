@@ -89,7 +89,7 @@
     printing the object. By putting this in 
     an attribute, the objects class can be used for indicating other
     information about the structure of the object.  For
-    these pure tframe objects the default \code{tframe} and code{tframe<-} will
+    these pure tframe objects the default \code{tframe} and \code{tframe<-} will
     often be adequate. The generic/method approach allows for special case (like
     TSdata where the tframe information is not an attribute of the object, but
     rather an attribute of the data matrices which are elements of the object).
@@ -107,9 +107,9 @@
     The \code{tframed} constructor is simply a shortcut for assigning the tframe
     (tframe(x) <- tf) and series names (seriesNames(x) <-  names) to an object,
     but never assigns NULL values, so the result is guaranteed to be a 
-    code{tframed} object. It is like \code{ts} but enables the tframe library's  
+    \code{tframed} object. It is like \code{ts} but enables the tframe library's  
     methods for handling time. If the \code{tf} argument is a 
-    \code{tframed} object rather than a \code{tframe}, then the code{tframe} 
+    \code{tframed} object rather than a \code{tframe}, then the \code{tframe} 
     is extracted and used. If the \code{names} argument is not mode "character"
     of appropriate length, then \code{seriesNames(names)} is used. These make it
     simple to assign the time frame and names of one object to another by

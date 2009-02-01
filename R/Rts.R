@@ -3,22 +3,18 @@
 #   .ts methods (for the object) and .tstframe methods (for the tframe)
 
 ###############################################
+is.tframed.ts <- function(x) {TRUE}
 
 "seriesNames<-.ts" <- function (x, value) 
-  {attr(x, "seriesNames") <- value
-   if (is.matrix(x)) dimnames(x) <- list(NULL, value)
+  {if (is.matrix(x)) dimnames(x) <- list(NULL, value)
+   else attr(x, "seriesNames") <- value
    x
   }
 
 tframe.ts <- function(x){classed(tsp(x), c("tstframe", "tframe"))} # extractor
 
 tfSet.tstframe <- function(value, x) {
-    # should use try
-    if (is.list(value)) {
-        r <- do.call("ts", append(list(x), value))
-        if (inherits(r, "try-error")) {r <- x ; attr(r, "tframe") <- value}
-	return(r)
-	}
+    if (is.list(value)) { return(do.call("ts", append(list(x), value)))}
     else {
         r <- try(x <- ts(x)) # vector of tsp values
         if (inherits(r, "try-error")) {attr(x, "tframe") <- value}
