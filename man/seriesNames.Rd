@@ -25,9 +25,7 @@ The assignment method makes \code{names} (a vector of strings)
 the series names of data.
 }
 \seealso{
-    \code{\link{tframed}},
-    \code{\link[dse]{seriesNamesInput}},
-    \code{\link[dse]{seriesNamesOutput}}
+    \code{\link{tframed}}
 }
 
 \examples{
