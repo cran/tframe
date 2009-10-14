@@ -87,11 +87,11 @@
 \seealso{
     \code{\link{tframe}}, 
     \code{\link{tframed}}
-    \code{\link[base]{start}}
-    \code{\link[base]{end}}
-    \code{\link[base]{frequency}}
-    \code{\link[base]{periods}}
-    \code{\link[base]{time}}
+    \code{\link[stats]{start}}
+    \code{\link[stats]{end}}
+    \code{\link[stats]{frequency}}
+    \code{\link{periods}}
+    \code{\link[stats]{time}}
     \code{\link{lag}}
     \code{\link{diff}}
 }

@@ -54,7 +54,7 @@
 }
 \seealso{
     \code{\link[base]{diff}},
-    \code{\link[ts]{lag}}
+    \code{\link[stats]{lag}}
 }
 \examples{
     z <- ts(rnorm(100), start=c(1982,1), frequency=12)

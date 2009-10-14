@@ -26,8 +26,8 @@ the series names of data.
 }
 \seealso{
     \code{\link{tframed}},
-    \code{\link[dse1]{seriesNamesInput}},
-    \code{\link[dse1]{seriesNamesOutput}}
+    \code{\link[dse]{seriesNamesInput}},
+    \code{\link[dse]{seriesNamesOutput}}
 }
 
 \examples{

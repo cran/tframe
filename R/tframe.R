@@ -628,18 +628,19 @@ splice.default <- function(mat1, mat2, ...)
  if (is.null(mat2)) return(mat1)
  freq <- tffrequency(mat1)
  if (freq != tffrequency(mat2)) stop("frequencies must be the same.")
- p <- dim(mat1)[2]
- if (p != dim(mat2)[2])   stop("number of series must be the same.")
+ p <- nseries(mat1)
+ if (p != nseries(mat2))   stop("number of series must be the same.")
  fr <- c(freq,1)
  st <- min(fr %*% tfstart(mat1), fr %*% tfstart(mat2))
  strt <- c(st %/% freq, st %% freq)
  en <- max(fr %*% tfend(mat1), fr%*% tfend(mat2))
  r1 <-r2 <-tframed(matrix(NA, 1+en-st, p), list(start=strt, frequency=freq))
- r1[c((fr %*% tfstart(mat1))-st) + 1:dim(mat1)[1],] <- mat1
- r2[c((fr %*% tfstart(mat2))-st) + 1:dim(mat2)[1],] <- mat2
+ r1[c((fr %*% tfstart(mat1))-st) + 1:periods(mat1),] <- mat1
+ r2[c((fr %*% tfstart(mat2))-st) + 1:periods(mat2),] <- mat2
  na <- is.na(r1)
  r1[na] <- r2[na] # put mat2 only in na locations of mat1
- dimnames(r1)<-list(round(time(r1),digits=3),dimnames(mat1)[[2]])
+ #dimnames(r1)<-list(round(time(r1),digits=3),dimnames(mat1)[[2]])
+ seriesNames(r1)<- seriesNames(mat1)
  r1 <- tframed(r1, list(start=earliestStart(mat1,mat2), 
                         end =latestEnd(mat1,mat2), frequency=freq))
  r1
