@@ -25,7 +25,7 @@
     \code{\link{start}}
     \code{\link{end}}
     \code{\link{frequency}}
-    \code{\link{periods}}
+    \code{\link{Tobs}}
     \code{\link{time}}
 }
 \examples{

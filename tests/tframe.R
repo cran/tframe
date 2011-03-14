@@ -40,7 +40,7 @@ synopsis <- TRUE
   if (verbose) {if (ok) cat("ok\n") else cat("failed!\n") }
 
   if (verbose) cat("tframe test 5 ... ")
-  ok <- periods(dat) == periods(tspvector)
+  ok <- Tobs(dat) == Tobs(tspvector)
   all.ok <- all.ok & ok 
   if (verbose) {if (ok) cat("ok\n") else cat("failed!\n") }
 

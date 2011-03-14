@@ -15,12 +15,12 @@
     \item{x}{An object)}
 }
 \value{A logical scalar.}
-\details{Check if the number of periods in the tframe corresponds to the
+\details{Check if the number of Tobs in the tframe corresponds to the
     number of observations in the time series.
 }
 \seealso{
     \code{\link{is.tframe}}
-    \code{\link{periods}}
+    \code{\link{Tobs}}
 }
 
 \examples{

@@ -59,7 +59,7 @@ make sense,
 that is effectively what the above tframe assignment will do. For some
 existing code, most of the conversion to these more robust methods is
 accomplished simply by changing "tsp" to "tframe" and nrow() for a time 
-series matrix to periods().
+series matrix to Tobs().
 
 The tframe assignment example above is accomplished by switching the 
 dispatch so that it follows the classes of the tframe of \code{y}, rather than 
@@ -116,7 +116,7 @@ then the tframe
 attibute of an object using this time frame should have class c("zzz", "tframe").
 (Note zzz should be different from the class of the object itself.)
 The most important methods which need to be
-implemented are tframe.zzz(), start.zzz(), end.zzz(), and periods.zzz().
+implemented are tframe.zzz(), start.zzz(), end.zzz(), and Tobs.zzz().
 While frequency.zzz() should not in theory be necessary, it makes 
 porting code much easier. Other methods which may be needed are
 time.zzz(), checktframeConsistent.zzz(), tfTruncate.zzz(), 

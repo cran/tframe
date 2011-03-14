@@ -124,7 +124,7 @@
     \code{\link{tfstart}},
     \code{\link{tfend}},
     \code{\link{tffrequency}},
-    \code{\link{tfperiods}},
+    \code{\link{Tobs}},
     \code{\link{tftime}},
     \code{\link{tfL}}
 }
@@ -139,7 +139,7 @@
     tframe(zzz)
     
     as.tframe(start=c(1992,1), end=c(1996,3), frequency=4)
-    periods(as.tframe(start=c(1992,1), end=c(1996,3), frequency=4))
+    Tobs(as.tframe(start=c(1992,1), end=c(1996,3), frequency=4))
     end(as.tframe(start=c(1992,1), end=c(1996,3), frequency=4))
 
     z <- tframed(rnorm(100), start=c(1982,1), frequency=12)

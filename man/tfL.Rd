@@ -59,10 +59,10 @@
 \examples{
     z <- ts(rnorm(100), start=c(1982,1), frequency=12)
     tfstart(z)
-    tfperiods(z)
+    Tobs(z)
     z <- diff(z)
     tfstart(z)
-    tfperiods(z)
+    Tobs(z)
 
     ts(1:5) - tfL(ts(1:5))
     (1:5) - tfL(1:5) # (1:5) this is not a tframed object, so minus is the default

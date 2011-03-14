@@ -18,11 +18,11 @@ seqN <- function(N) {if (0==length(N)) NULL else if (N<=0) NULL else seq(N)}
 #  methods can be defined (see eg start.tstframe for tframes from ts objects). 
 
 
-# periods should give the number of data points in the time direction.
-# for consistency check periods needs to look at the data not the tframe,
+# Tobs should give the number of data points in the time direction.
+# for consistency check Tobs needs to look at the data not the tframe,
 # i.e. the number of (vector) observations.
-periods <- function(x) UseMethod("periods")
-periods.default <- function(x) {if (is.array(x)) dim(x)[1] else length(x) }
+Tobs <- function(x) UseMethod("Tobs")
+Tobs.default <- function(x) {if (is.array(x)) dim(x)[1] else length(x) }
 
 # the functions start, end, and frequency in tframe and dse do not 
 #  need "...", but the generic in R has it, so it is added here.
@@ -31,19 +31,22 @@ start.tframed     <- function(x, ...) tfstart(tframe(x))
 end.tframed       <- function(x, ...) tfend(tframe(x)) 
 frequency.tframed <- function(x, ...) tffrequency(tframe(x)) 
 time.tframed      <- function(x, ...) tftime(tframe(x)) 
-periods.tframed   <- function(x)      tfperiods(tframe(x)) 
+Tobs.tframed   <- function(x)      Tobs(tframe(x)) 
 
 start.tframe     <- function(x, ...) tfstart(x)
 end.tframe       <- function(x, ...) tfend(x) 
 frequency.tframe <- function(x, ...) tffrequency(x) 
 time.tframe      <- function(x, ...) tftime(x) 
-periods.tframe   <- function(x)      tfperiods(x)
+Tobs.tframe   <- function(x) # formerly default for tfTobs
+  {if (is.null(x)) return(NULL) else
+   if (!is.tframe(x)) x <- tframe(x)
+   1+round((x[2]-x[1])*x[3])
+  }
 
 tfstart     <- function(x) UseMethod("tfstart")
 tfend       <- function(x) UseMethod("tfend")
 tffrequency <- function(x) UseMethod("tffrequency")
 tftime <- function(x) UseMethod("tftime")
-tfperiods <- function(x) UseMethod("tfperiods")
 
 
 # these server two purposes. One is a method for tframe's. Two is a consistent
@@ -71,14 +74,9 @@ tffrequency.default <- function(x)
 tftime.default      <- function(x)
   {if (is.null(x)) return(NULL) else
    #if (!is.tframe(x)) x <- tframe(x)
-   #tframed(x[1]+(seq(periods(x))-1)/x[3], tf=x)
-   if (is.tframe(x)) tframed(x[1]+(seq(periods(x))-1)/x[3], tf=x)
+   #tframed(x[1]+(seq(Tobs(x))-1)/x[3], tf=x)
+   if (is.tframe(x)) tframed(x[1]+(seq(Tobs(x))-1)/x[3], tf=x)
    else time(x)
-  }
-tfperiods.default   <- function(x)
-  {if (is.null(x)) return(NULL) else
-   if (!is.tframe(x)) x <- tframe(x)
-   1+round((x[2]-x[1])*x[3])
   }
 
 
@@ -100,7 +98,7 @@ diff.tframed <- function(x, lag=1,   differences=1, ...)
 diff.tframe <- function (x,lag=1, differences=1, ...) 
  {d <- lag * differences
   tfTruncate(x, start=if(d >= 0) 1+d else NULL, 
-                  end=if(d <  0) periods(x)-d else NULL)
+                  end=if(d <  0) Tobs(x)-d else NULL)
  }
 
 #  tfplot and tfprint below provide generic methods for plotting and printing
@@ -281,19 +279,19 @@ as.tframed <- function(x) # guarantee x has a tframe
  }
  
 as.tframe <- function(...) #constructor
- {#expecting a combination of start, end, frequency, delta, periods,
+ {#expecting a combination of start, end, frequency, delta, Tobs,
   #which has enough info to calculate periods. (defaults work for other things.)
   # This is not very generic. The list must define a ts.
   lst <- list(...)
-  if(is.null(lst$periods) & (is.null(lst$start) | is.null(lst$end)) ) 
-     stop("Must supply periods or start and end.")
+  if(is.null(lst$Tobs) & (is.null(lst$start) | is.null(lst$end)) ) 
+     stop("Must supply Tobs or start and end.")
 
   if(is.null(lst$start) & is.null(lst$end)) lst$start <- c(1,1)
   if (! is.null(lst$frequency))   f <- lst$frequency
   else if (! is.null(lst$deltat)) f <- 1/lst$deltat
   else f <- 1
   #more generic date calc. would be nice here
-  if (! is.null(lst$periods)) p <- lst$periods
+  if (! is.null(lst$Tobs)) p <- lst$Tobs
   else p <- 1 + f * (lst$end[1] - lst$start[1]) + (lst$end[2] - lst$start[2])
 
   # ts seems to want missing values rather than null.
@@ -328,11 +326,11 @@ tfSet <- function(value, x) UseMethod("tfSet") # dispatch on value
 #       if(is.null(value$start) & is.null(value$end))
 #                         stop("Could not determine a tframe from value.")
 #       value <- as.tframe(start=value$start, end=value$end, 
-#                         frequency=value$frequency, periods=periods(x))
+#                         frequency=value$frequency, Tobs=Tobs(x))
 #       }
 #   if(! is.tframe(value)) stop("Could not determine a tframe from value.")
 #   # next is checking after the fact, but value may just be start and freq
-#   #  which is not enough to know periods
+#   #  which is not enough to know Tobs
 #   attr(x, "tframe") <- value
 #   if((!is.null(value)) && !checktframeConsistent(tframe(x), x))
 #      stop("time frame value in tframe assignment is not consistent with data.")
@@ -350,12 +348,12 @@ tfSet.list <- function(value, x) {
       if(is.null(value$start) & is.null(value$end))
                         stop("Could not determine a tframe from value.")
       #value <- as.tframe(start=value$start, end=value$end, 
-      #                  frequency=value$frequency, periods=periods(x))
+      #                  frequency=value$frequency, Tobs=Tobs(x))
       return(tfSet.tstframe(value, x))
       }
   #  if(! is.tframe(value)) stop("Could not determine a tframe from value.")
   #  # next is checking after the fact, but value may just be start and freq
-  #  #  which is not enough to know periods
+  #  #  which is not enough to know Tobs
   #  attr(x, "tframe") <- value
   #  if((!is.null(value)) && !checktframeConsistent(tframe(x), x))
   #     stop("time frame value in tframe assignment is not consistent with data.")
@@ -372,7 +370,7 @@ tfSet.default <- function(value, x) {
 #  if(! is.tframe(value))  value <- as.tframe(value)  
 #  if(! is.tframe(value)) stop("Could not determine a tframe from value.")
 #  # next is checking after the fact, but value may just be start and freq
-#  #  which is not enough to know periods
+#  #  which is not enough to know Tobs
 #  attr(x, "tframe") <- value
 #  if((!is.null(value)) && !checktframeConsistent(tframe(x), x))
 #     stop("time frame value in tframe assignment is not consistent with data.")
@@ -388,7 +386,7 @@ tframed.default <- function(x, tf=NULL, names = NULL, start=NULL, end=NULL, ...)
   if (!is.null(names))  seriesNames(x) <-  names
   if (is.null(tf))
      if ((!is.null(start)) | (!is.null(end))) 
-           tf <- as.tframe(start=start, end=end, periods=periods(x), ...)
+           tf <- as.tframe(start=start, end=end, Tobs=Tobs(x), ...)
      else  tf <- tframe(x) # this generates a default
   tframe(x) <- tf
   x
@@ -431,7 +429,7 @@ tfExpand.tframe <- function(x, add.start=0, add.end=0)
 
 checktframeConsistent <- function(tf, x) UseMethod("checktframeConsistent")
 
-checktframeConsistent.default <- function(tf, x) tfperiods(tf) == periods(x)
+checktframeConsistent.default <- function(tf, x) Tobs(tf) == Tobs(x)
 
 testEqualtframes <- function(tf1, tf2) UseMethod("testEqualtframes")
 
@@ -552,12 +550,12 @@ latestEndIndex.tframe <- function(x, ...)
 ################################################
 
 #checktframeConsistent.stamped <- function(tf, x)
-#  {periods(x) == periods(tf)}
+#  {Tobs(x) == Tobs(tf)}
 
 testEqualtframes.stamped <- function(tf1, tf2)
   {all(tf1$stamp == tf2$stamp)}
 
-tfperiods.stamped <- function(x) length(tframe(x))
+Tobs.stamped <- function(x) length(tframe(x))
 
 ###############################################
 
@@ -635,8 +633,8 @@ splice.default <- function(mat1, mat2, ...)
  strt <- c(st %/% freq, st %% freq)
  en <- max(fr %*% tfend(mat1), fr%*% tfend(mat2))
  r1 <-r2 <-tframed(matrix(NA, 1+en-st, p), list(start=strt, frequency=freq))
- r1[c((fr %*% tfstart(mat1))-st) + 1:periods(mat1),] <- mat1
- r2[c((fr %*% tfstart(mat2))-st) + 1:periods(mat2),] <- mat2
+ r1[c((fr %*% tfstart(mat1))-st) + 1:Tobs(mat1),] <- mat1
+ r2[c((fr %*% tfstart(mat2))-st) + 1:Tobs(mat2),] <- mat2
  na <- is.na(r1)
  r1[na] <- r2[na] # put mat2 only in na locations of mat1
  #dimnames(r1)<-list(round(time(r1),digits=3),dimnames(mat1)[[2]])
@@ -672,7 +670,7 @@ tfTruncate.default <- function(x, start=NULL, end=NULL)
 tfExpand <- function(x, add.start=0, add.end=0)  
     if(is.null(x)) return(NULL) else UseMethod("tfExpand")
   # expand (a tframe) by add.start periods on the beginning
-  # and add.end periods on the end
+  # and add.end Tobs on the end
 
 tfExpand.default <- function(x, add.start=0, add.end=0)
     {tf <- tfExpand(tframe(x), add.start=add.start, add.end=add.end)

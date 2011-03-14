@@ -8,13 +8,15 @@ Description: The tframe package provides a kernel of functions for
         distributed as a vignette, or ?tframe.Intro for more details.
 Depends: R (>= 2.5.0)
 Imports: stats
-Version: 2009.10-2
-Date: 2009-10-14
+Version: 2011.3-1
+Date: 2011-03-14
 LazyLoad: yes
 License: GPL-2 | file LICENSE
 Author: Paul Gilbert <pgilbert@bank-banque-canada.ca>
 Maintainer: Paul Gilbert <pgilbert@bank-banque-canada.ca>
 URL: http://www.bank-banque-canada.ca/pgilbert
-Packaged: 2010-12-19 02:58:40 UTC; paul
 Repository: CRAN
-Date/Publication: 2011-01-20 13:09:43
+Repository/R-Forge/Project: tsanalysis
+Repository/R-Forge/Revision: 40
+Date/Publication: 2011-03-22 06:48:17
+Packaged: 2011-03-15 22:04:45 UTC; rforge

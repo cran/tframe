@@ -1,3 +1,8 @@
+Changes in tframe version 2011.3-1
+
+   o	Changed periods() and tfperiods() (distinction no longer needed) 
+   	to Tobs() to avoid conflicts with other packages.
+
 Changes in tframe version  2009.10-2
 
    o	Removed see also link to dse so the package builds without having to 
