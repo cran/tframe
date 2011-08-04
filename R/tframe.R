@@ -166,9 +166,11 @@ tfplot.default <- function(x, ..., tf=tfspan(x , ...), start=tfstart(tf), end=tf
  }
 
 tfOnePlot <- function(x, tf=tframe(x), start=tfstart(tf), end=tfend(tf), 
-        lty=1:5, lwd=1, pch=NULL, col=1:6, cex=NULL,
-        xlab=NULL, ylab=NULL, xlim=NULL, ylim=NULL, ...)
- {if (!is.tframed(x)) UseMethod("plot")
+         Title=NULL, lty=1:5, lwd=1, pch=NULL, col=1:6, cex=NULL,
+        xlab=NULL, ylab=NULL, xlim=NULL, ylim=NULL, par=NULL,
+	lastObs=FALSE,  source=NULL, footnote=NULL,
+	legend=NULL, legend.loc="topleft"){
+  if (!is.tframed(x)) UseMethod("plot")
   else
     {if (!is.null(start)) x <- tfwindow(x, start=start, warn=FALSE)
      if (!is.null(end))   x <- tfwindow(x, end=end, warn=FALSE)
@@ -188,12 +190,33 @@ tfOnePlot <- function(x, tf=tframe(x), start=tfstart(tf), end=tfend(tf),
         if (length(col) < N) col <- rep(col,length.out=N)
 	}
      plot(tline, x[,1], type="l", lty=lty, lwd=lwd, pch=pch, 
-        col=col, cex=cex, xlab=xlab, ylab=ylab, xlim=xlim, ylim=ylim, ...)
+        col=col, cex=cex, xlab=xlab, ylab=ylab, xlim=xlim, ylim=ylim, par=par)
 
      if (2 <= N) for (i in 2:N) lines(tline, x[,i],
-       type="l", lty=lty[i], lwd=lwd[i], pch=pch[i], col=col[i], ...)
+       type="l", lty=lty[i], lwd=lwd[i], pch=pch[i], col=col[i], par=par)
     }
-  invisible()
+    if (!is.null(Title) && (is.null(options()$PlotTitles) ||
+        options()$PlotTitles)) title(main = Title)	
+    if (!is.null(source) && (is.null(options()$Plotsource) ||
+        options()$Plotsource)) 
+	     mtext(source, side=1, line = 2, adj=0, cex=0.7)	
+    if (lastObs) {
+       if(frequency(x) == 12)dt <- paste(c("Jan", "Feb","Mar","Apr","May",
+          "Jun","Jul","Aug","Sep","Oct","Nov","Dec")[end(x)[2]],end(x)[1],
+	      collapse=" ")
+       else if(frequency(x) == 4)dt <- paste(
+                c("Q1", "Q2","Q3","Q4")[end(x)[2]],end(x)[1], collapse=" ")
+       else   dt <- end(x)
+       last <- paste("Last observation:", dt)
+       mtext(last, side=1, line = 2, adj=1, cex=0.7)
+       }
+    # footnote will go on another line with \n
+    if (!is.null(footnote) && (is.null(options()$Plotfootnote) ||
+        options()$Plotfootnote)) 
+	     mtext(footnote, side=1, line = 3, adj=0, cex=0.7)	
+    if (!is.null(legend)) legend(legend.loc, inset = c(0.05, .05), 
+       col=col, lty=lty, cex=0.7, legend=legend)
+  invisible(x)
  }
 
 

@@ -16,8 +16,10 @@
        xlab=NULL, ylab=seriesNames(x), xlim = NULL, ylim = NULL, 
        graphs.per.page=5, par=NULL, mar=par()$mar, reset.screen=TRUE)
     tfOnePlot(x, tf=tframe(x), start=tfstart(tf), end=tfend(tf),
-        lty=1:5, lwd=1, pch=NULL, col=1:6, cex=NULL,
-        xlab=NULL, ylab=NULL, xlim=NULL, ylim=NULL, ...)
+        Title=NULL, lty=1:5, lwd=1, pch=NULL, col=1:6, cex=NULL,
+        xlab=NULL, ylab=NULL, xlim=NULL, ylim=NULL, par=NULL,
+	lastObs=FALSE,  source=NULL, footnote=NULL,
+	legend=NULL, legend.loc="topleft")
 }
 
 \arguments{
@@ -29,15 +31,22 @@
     end.}
     \item{series}{series to be plotted. (passed to selectSeries)}
     \item{Title}{string to use for plot title (but see details).}
-    \item{lty}{passed to matplot. See also par.)}
-    \item{lwd}{passed to matplot. See also par.)}
-    \item{pch}{passed to matplot. See also par.)}
-    \item{col}{passed to matplot. See also par.)}
-    \item{cex}{passed to matplot. See also par.)}
+    \item{lty}{passed to plot. See also par.)}
+    \item{lwd}{passed to plot. See also par.)}
+    \item{pch}{passed to plot. See also par.)}
+    \item{col}{passed to plot. See also par.)}
+    \item{cex}{passed to plot. See also par.)}
     \item{xlab}{string to use for x label (passed to plot).}
     \item{ylab}{string to use for y label (passed to plot).}
-    \item{xlim}{passed to matplot. See also par.)}
-    \item{ylim}{passed to matplot. See also par.)}
+    \item{xlim}{passed to plot. See also par.)}
+    \item{ylim}{passed to plot. See also par.)}
+    \item{lastObs}{Logical indicating if the date of the last observation
+        should be printed below the graph, flushed right.}
+    \item{source}{String printed below the graph, flushed left.}
+    \item{footnote}{String printed below lastObs and source, flushed left.}
+    \item{legend}{NULL (indicating no legend) or a vector strings to be used
+       for a legend (see legend)}
+    \item{legend.loc}{indication of placement of the legend (see legend)}
     \item{graphs.per.page}{integer indicating number of graphs to place on a
        page.}
     \item{par}{a list of arguments passed to par() before plotting.)}
@@ -73,15 +82,19 @@
     PlotTitles is FALSE. This can be set with \code{options(PlotTitles=FALSE)}. 
     This provides a convenient  mechanism to omit all titles when the title
     may be added separately (e.g. in Latex).
+    
+    Similarly, \code{options(PlotSource=FALSE)} and 
+    \code{options(Plotfootnote=FALSE) can be used to suppress printing of 
+    these.}
 }
 \section{Side Effects}{An object is plotted.}
 \seealso{
-    \code{\link{tfprint}}
-    \code{\link{tframe}}
-    \code{\link{tframed}}
-    \code{\link{print}}
-    \code{\link{plot}}
-    \code{\link{matplot}}
+    \code{\link{tfprint}},
+    \code{\link{tframe}},
+    \code{\link{tframed}},
+    \code{\link{print}},
+    \code{\link{plot}},
+    \code{\link{legend}},
     \code{\link{par}}
 }
 \examples{

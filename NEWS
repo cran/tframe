@@ -1,3 +1,9 @@
+Changes in tframe version 2011.8-1
+
+   o	Removed ... argument from tfOnePlot, since it seems unnecessary.
+
+   o	Added arguments par, lastObs, source, and footnote to tfOnePlot.
+
 Changes in tframe version 2011.3-1
 
    o	Changed periods() and tfperiods() (distinction no longer needed) 
