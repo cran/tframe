@@ -129,13 +129,7 @@ latestEndIndex.zzz().
 Package: \tab tframe\cr
 Depends: \tab R\cr
 License: \tab free, see LICENSE file for details.\cr
-URL: \tab http://www.bank-banque-canada.ca/pgilbert\cr
 }
-}
-\author{
-Paul Gilbert <pgilbert@bank-banque-canada.ca>
-
-Maintainer: Paul Gilbert <pgilbert@bank-banque-canada.ca>  
 }
 
 \seealso{

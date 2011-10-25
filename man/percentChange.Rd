@@ -67,7 +67,7 @@ percentChange with lag=frequency(obj).
 \code{\link{diff}}
 }
 \examples{
-z <- matrix(100 + rnorm(200),100,2)
+z <- ts(matrix(100 + rnorm(200),100,2), start=c(1990,1), frequency=12)
 z[z == 0] <- 1 # not to likely, but it can happen
 zyypc <- ytoypc(z)
 zpc <- percentChange(z)

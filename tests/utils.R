@@ -37,8 +37,8 @@ fuzz <- 1e-14
 if ( !all(fuzz > (100/(1:4) - annualizedGrowth(ts(1:5)))))
        stop("default test of annualizedGrowth for ts failed.")
 
-if ( !all(fuzz >  (100/as.ts(1:4) - annualizedGrowth((1:5)))))
-       stop("default test of annualizedGrowth for non-ts vector failed.")
+#if ( !all(fuzz >  (100/as.ts(1:4) - annualizedGrowth((1:5)))))
+#       stop("default test of annualizedGrowth for non-ts vector failed.")
 
 z <- ts(1:5, start=c(1992,1), frequency=4)
 if ( !all(fuzz >  (100*((2:5 / 1:4)^4 -1) - annualizedGrowth(z)))) stop("frequency=4 test of annualizedGrowth failed.")

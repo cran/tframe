@@ -1,3 +1,19 @@
+Changes in tframe version 2011.11-1
+
+   o	Updated maintainer email address.
+
+   o	Added lastObs and source optional arguments to tfplot.
+
+   o	Added subtitle, footnoteLeft (synonym for footnote) and footnoteRight
+   	optional arguments to tfplot and tfOnePlot.
+
+   o	Added title as a synonym for Title in tfplot and tfOnePlot.
+
+   o	Restricted annualizedGrowth(), percentChange(), and ytoypc() to 
+   	work only on tframed objects.
+
+   o	Fix to tfOnePlot for lost date information in univariate case.
+
 Changes in tframe version 2011.8-1
 
    o	Removed ... argument from tfOnePlot, since it seems unnecessary.
