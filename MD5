@@ -1,11 +1,11 @@
-e97c366aa49359416c63fc80efbdf1ae *DESCRIPTION
-ed81859b5443525f22adeca42630cf70 *LICENSE
+bc81dbb2d33a5927475f2692319381a7 *DESCRIPTION
+8c2ef3f2ed55a520caa10c020749612d *LICENSE
 6c1aaaea75a8cd019a8e35b28b9c2956 *NAMESPACE
 a0477a20bd1d1bb2af260c4740ddd651 *NEWS
 f37d49648eb1f67277cc4ad5156b9a6b *R/Rts.R
 676fa0417ba7162ac4e85840ae41b269 *R/tframe.R
 25b01f05ee5ff3a31d9e7f2ea9e1c395 *inst/doc/Guide.Stex
-c96dac5088a5c1ecf70c3459ef0ec75f *inst/doc/Guide.pdf
+8d9aaf57a9afdb469f63587b4c111d43 *inst/doc/Guide.pdf
 666a2e88eb7661ff263736d263e55d50 *man/00tframe.Intro.Rd
 d0747042f38676d4c4fc506a547bc828 *man/addDate.Rd
 e4a04b54e2db8ea79b694ee0b54712f7 *man/checktframeConsistent.Rd
@@ -34,3 +34,4 @@ cfccb502379e4713a94be50ff59c4a09 *man/tsScan.Rd
 070635e96da7f9cb25874c744fea69f0 *tests/tf2.R
 f33b820f0f4c130639125a39b8325707 *tests/tframe.R
 a90200a4be930f3d859629bcc25ca506 *tests/utils.R
+25b01f05ee5ff3a31d9e7f2ea9e1c395 *vignettes/Guide.Stex

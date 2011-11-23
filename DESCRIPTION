@@ -7,7 +7,7 @@ Description: The tframe package provides a kernel of functions for programming
 	See the Guide distributed as a vignette, or ?tframe.Intro for more details.
 Depends: R (>= 2.5.0)
 Imports: stats
-Version: 2011.11-1
+Version: 2011.11-2
 LazyLoad: yes
 License: GPL-2 | file LICENSE
 Author: Paul Gilbert <pgilbert.ttv9z@ncf.ca>
@@ -15,6 +15,6 @@ Maintainer: Paul Gilbert <pgilbert.ttv9z@ncf.ca>
 URL: http://tsanalysis.r-forge.r-project.org/
 Repository: CRAN
 Repository/R-Forge/Project: tsanalysis
-Repository/R-Forge/Revision: 70
-Date/Publication: 2011-11-03 12:48:26
-Packaged: 2011-10-25 17:33:40 UTC; rforge
+Repository/R-Forge/Revision: 76
+Date/Publication: 2011-11-28 12:00:10
+Packaged: 2011-11-23 22:30:59 UTC; rforge
