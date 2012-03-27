@@ -197,10 +197,11 @@ tfOnePlot <- function(x, tf=tframe(x), start=tfstart(tf), end=tfend(tf),
      # formerly matplot with tline not a matrix was used, but this does
      # not plot (non-ts) dates as well as plot.
      if (lastObs) {
- 	if(frequency(x) == 12)dt <- paste(c("Jan", "Feb","Mar","Apr","May",
+ 	if(is.null(frequency(x)))   dt <- end(x)
+	else if(frequency(x) == 12) dt <- paste(c("Jan", "Feb","Mar","Apr","May",
  	   "Jun","Jul","Aug","Sep","Oct","Nov","Dec")[end(x)[2]],end(x)[1],
  	       collapse=" ")
- 	else if(frequency(x) == 4)dt <- paste(
+ 	else if(frequency(x) == 4) dt <- paste(
  		 c("Q1", "Q2","Q3","Q4")[end(x)[2]],end(x)[1], collapse=" ")
  	else   dt <- end(x)
  	last <- paste("Last observation:", dt)

@@ -1,6 +1,12 @@
-Changes in tframe version 2011.11-1
+Changes in tframe version 2012.3-1
+
+   o	fixed tfOnePlot to handle zoo daily data in lastObs.
+
+Changes in tframe version 2011.11-2
 
    o	Updated maintainer email address.
+
+Changes in tframe version 2011.11-1
 
    o	Added lastObs and source optional arguments to tfplot.
 
