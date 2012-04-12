@@ -18,11 +18,10 @@ of time. \pkg{tframe} is intended to make it easier to write code which can
 use any new/better 
 time representations when they appear. It also provides plotting, time 
 windowing, and some other utility functions which are specifically intended 
-for time series. The main functions in this package that might be called 
-directly by users are
-\code{\link{tfplot}}, \code{\link{diffLog}}, \code{\link{percentChange}}, 
-\code{\link{trimNA}} and
-\code{\link{tsScan}}. See the help for more details and examples.
+for time series. Functions that were in this package and are intended 
+primarily to be called directly by users have been moved to \pkg{tfplot}:
+\code{tfplot}, \code{diffLog}, \code{percentChange} and
+\code{tsScan}. See the help for more details and examples.
 
 \pkg{tframe} provides generic methods
 by which code can be developed without too much dependence on the
@@ -125,18 +124,13 @@ earliestStartIndex.zzz(),
 earliestEndIndex.zzz(), latestStartIndex.zzz(), and
 latestEndIndex.zzz().
 
-\tabular{ll}{
-Package: \tab tframe\cr
-Depends: \tab R\cr
-License: \tab free, see LICENSE file for details.\cr
-}
+See the help for more details and examples.
 }
 
 \seealso{
 \code{\link{tframe}},
 \code{\link{tframed}},
 \code{\link{tfwindow}},
-\code{\link{tfplot}}
 }
 \keyword{programming}
 \keyword{utilities}

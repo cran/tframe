@@ -1,6 +1,16 @@
+Changes in tframe version 2012.4-2
+
+   o	Split tfplot and other user utilities into package tfplot.
+
+Changes in tframe version 2012.4-1
+
+   o	Fixed percentChange error when differencing zoo class series.
+
+   o	Fixed tfplot to pass subtitle, legend, and legend.loc to tfOnePlot.
+
 Changes in tframe version 2012.3-1
 
-   o	fixed tfOnePlot to handle zoo daily data in lastObs.
+   o	Fixed tfOnePlot to handle zoo daily data in lastObs.
 
 Changes in tframe version 2011.11-2
 

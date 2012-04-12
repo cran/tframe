@@ -81,11 +81,6 @@ S3method("is.tframed","ts")
 
 export("tfspan")
 
-export("tfplot")
-S3method("tfplot","default")
-
-export("tfOnePlot")
-
 export("tfprint")
 S3method("tfprint","default")
 S3method("tfprint","tframe")
@@ -150,20 +145,3 @@ S3method("selectSeries","default")
 export("tbind")
 S3method("tbind","default")
 S3method("tbind","ts")
-
-export("addDate")
-
-export("diffLog")
-S3method("diffLog","default")
-
-export("percentChange")
-S3method("percentChange","default")
-
-export("ytoypc")
-S3method("ytoypc","default")
-
-export("annualizedGrowth")
-S3method("annualizedGrowth","default")
-
-export("tsWrite")
-export("tsScan")

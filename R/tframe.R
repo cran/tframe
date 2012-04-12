@@ -101,11 +101,6 @@ diff.tframe <- function (x,lag=1, differences=1, ...)
                   end=if(d <  0) Tobs(x)-d else NULL)
  }
 
-#  tfplot and tfprint below provide generic methods for plotting and printing
-#  tf time series objects. Plot methods will probably do some processing
-#  and eventually call tfplot.default.
-
-tfplot <- function(x, ...)  UseMethod("tfplot")
 
 tfspan <- function(x, ...)
   {others <- list(...)
@@ -114,133 +109,6 @@ tfspan <- function(x, ...)
    if (0 != length(others)) for (d in others) tfspan <- tbind(tfspan , d)
    tframe(tfspan)
   }
-
-
-tfplot.default <- function(x, ..., tf=tfspan(x , ...), start=tfstart(tf), end=tfend(tf),
-       series=seq(nseries(x)), 
-       Title=NULL, title=Title, subtitle=NULL,
-       lty = 1:5, lwd = 1, pch = NULL, col = 1:6, cex = NULL,
-       xlab=NULL, ylab=seriesNames(x), xlim = NULL, ylim = NULL,
-       graphs.per.page=5, par=NULL, mar=par()$mar, reset.screen=TRUE,
-       lastObs=FALSE, source=NULL,
-       footnote=NULL, footnoteLeft=footnote, footnoteRight=NULL)
-    {#  ... before other args means abbreviations do not work, but otherwise
-     # positional matching seems to kick in and an object to be plotted gets used
-     #  for start.
-     if (!is.tframed(x)) {
-       if (is.matrix(x) || is.vector(x)) x <- ts(x)
-       else return(plot(x))
-       }
-     if(inherits(x, "TSmodel"))
-        stop("tfplot does not know how to plot a model. ",
-             "Consider simulating the model: tfplot(simulate(model)) ",
-             "or evaluating the model with data: tfplot(l(model, data)).")
-     if( !is.numeric(x) )
-        stop("tfplot.default does not know how to plot this object.")
-     old.par <- par(par)
-     on.exit(par(old.par)) 
-     names <- seriesNames(x)
-     Ngraphs <- min(length(series), graphs.per.page)
-     if( (!is.list(xlim)) && (2 == length(xlim)))
-              xlim <- rep(list(xlim), length(series))
-     if( (!is.list(ylim)) && (2 == length(ylim)))
-              ylim <- rep(list(ylim), length(series))
-     if(reset.screen)  {
-        if ( (! is.null(par)) && (! is.null(par$mar))) mar <- par$mar
-        par(mfcol = c(Ngraphs, 1), mar=mar, no.readonly=TRUE)
-	}  
-#     tf <- tframe(tfwindow(x, start=start, end=end))
-# would be nice if this could expand tf (tfwindow only truncates - need a
-# replacement that expands too.)
-     N <- nseries(x)
-     if(length(xlab)          < N) xlab          <- rep(xlab, N)
-     if(length(subtitle)      < N) subtitle      <- rep(subtitle, N)
-     if(length(footnoteRight) < N) footnoteRight <- rep(footnoteRight, N)
-     if(length(footnoteLeft)  < N) footnoteLeft  <- rep(footnoteLeft, N)
-     if(length(source)        < N) source        <- rep(source, N)
-
-     for (i in series)
-       {if(mode(i)=="character") i <- match(i, names)
-	z <-  selectSeries(x, series=i)
-        for (d in list(...))
-    	   z <- tbind(z, selectSeries(d, series=i)) 
-	tfOnePlot(z, tf=tf, start=start, end=end,
-	          lty=lty, lwd=lwd, pch=pch, col=col, cex=cex,
-		  xlab=xlab[i], ylab=ylab[i], xlim=xlim[[i]], ylim=ylim[[i]],
-		  lastObs=lastObs, source=source[i],subtitle=subtitle[i],
-		  footnoteLeft=footnoteLeft[i], footnoteRight=footnoteRight[i])
-        if(!is.null(title) && (i==1) && (is.null(options()$PlotTitles)
-                || options()$PlotTitles)) title(main = title)	
-    	}
-    
-  invisible()
- }
-
-tfOnePlot <- function(x, tf=tframe(x), start=tfstart(tf), end=tfend(tf), 
-         Title=NULL, title=Title, subtitle=NULL, lty=1:5, lwd=1, pch=NULL, col=1:6, cex=NULL,
-        xlab=NULL, ylab=NULL, xlim=NULL, ylim=NULL, par=NULL,
-	lastObs=FALSE,  
-	source=NULL,
-	footnote=NULL, footnoteLeft=footnote, footnoteRight=NULL,
-	legend=NULL, legend.loc="topleft"){
-  if (!is.tframed(x)) UseMethod("plot")
-  else
-    {#if(is.null(source)) source <- 
-     #        if(is.null(options("TSsource"))) NULL else(options()$TSsource)(x)
-     if (!is.null(start)) x <- tfwindow(x, start=start, warn=FALSE)
-     if (!is.null(end))   x <- tfwindow(x, end=end, warn=FALSE)
-     if(is.null(xlab)) xlab <- ""
-     if(is.null(ylab)) ylab <- paste(seriesNames(x), collapse="  ")
-     if(is.null(ylim)) ylim <- range(x, na.rm=TRUE)
-     tline <- time(x)
-     if( inherits(tline, "ts")) tline <- unclass(tline)
-     # formerly matplot with tline not a matrix was used, but this does
-     # not plot (non-ts) dates as well as plot.
-     if (lastObs) {
- 	if(is.null(frequency(x)))   dt <- end(x)
-	else if(frequency(x) == 12) dt <- paste(c("Jan", "Feb","Mar","Apr","May",
- 	   "Jun","Jul","Aug","Sep","Oct","Nov","Dec")[end(x)[2]],end(x)[1],
- 	       collapse=" ")
- 	else if(frequency(x) == 4) dt <- paste(
- 		 c("Q1", "Q2","Q3","Q4")[end(x)[2]],end(x)[1], collapse=" ")
- 	else   dt <- end(x)
- 	last <- paste("Last observation:", dt)
-       }
-     N <- nseries(x)
-     if (1 == N) x <- as.matrix(x)
-     else {
-        if (length(lty) < N) lty <- rep(lty,length.out=N)
-        if (length(lwd) < N) lwd <- rep(lwd,length.out=N)
-        if (length(pch) < N) pch <- rep(pch,length.out=N)
-        if (length(col) < N) col <- rep(col,length.out=N)
-	}
-     plot(tline, x[,1], type="l", lty=lty, lwd=lwd, pch=pch, 
-        col=col, cex=cex, xlab=xlab, ylab=ylab, xlim=xlim, ylim=ylim, par=par)
-
-     if (2 <= N) for (i in 2:N) lines(tline, x[,i],
-       type="l", lty=lty[i], lwd=lwd[i], pch=pch[i], col=col[i], par=par)
-    }
-    if (!is.null(title) && (is.null(options()$PlotTitles) ||
-        options()$PlotTitles)) title(main = title)	
-    if (!is.null(subtitle) && (is.null(options()$PlotSubtitles) ||
-        options()$PlotSubtitles)) title(main = subtitle, line=0.5, 
-	  cex.main=0.8 *par("cex.main"), font.main=0.5 *par("font.main"))	
-    if (!is.null(source) && (is.null(options()$PlotSources) ||
-        options()$PlotSourcse)) 
-	     mtext(source, side=1, line = 2, adj=0, cex=0.7)	
-    if (lastObs) mtext(last, side=1, line = 2, adj=1, cex=0.7)
-     # footnote will go on another line with \n
-    if (!is.null(footnoteLeft) && (is.null(options()$PlotFootnotes) ||
-        options()$PlotFootnotes)) 
-	     mtext(footnoteLeft, side=1, line = 3, adj=0, cex=0.7)	
-    if (!is.null(footnoteRight) && (is.null(options()$PlotFootnotes) ||
-        options()$PlotFootnotes)) 
-	     mtext(footnoteRight, side=1, line = 3, adj=1, cex=0.7)	
-    if (!is.null(legend)) legend(legend.loc, inset = c(0.05, .05), 
-       col=col, lty=lty, cex=0.7, legend=legend)
-  invisible(x)
- }
-
 
 
 # Note tfprint prints the data. tframePrint  prints the tframe info. 
@@ -738,22 +606,6 @@ trimNA.default <- function(x, startNAs= TRUE, endNAs= TRUE)
  tfwindow(x, start=s, end=e, warn=FALSE)
 }
 
-
-
-diffLog <- function(obj, lag = 1, base = exp(1),
-              names=paste("diff of log of ", seriesNames(obj))) 
-   UseMethod("diffLog")
- 
-diffLog.default <- function(obj, lag = 1, base = exp(1),
-              names=paste("diff of log of ", seriesNames(obj)))
-{#Calculate the difference from lag periods prior for log of data.
- obj <- diff(log(obj, base = base), lag = lag)
- if(is.null(options()$ModSeriesNames) || options()$ModSeriesNames)
-        seriesNames(obj) <- names
- obj
-}
-
-
 aggregate.tframed <- function (x, ...)
    {tf <- tframe(x)
     nm <- seriesNames(x)
@@ -761,62 +613,6 @@ aggregate.tframed <- function (x, ...)
     r <- aggregate(ts(unclass(x), start=tf[1], end=tf[2], frequency=tf[3]), ...)
     tframed(r, tf=tframe(r), names=nm)
    }
-
-# Note 1. This is generic so methods can be defined on series within an object,
-# as in TSdata and TSestModel. For different types of series, eg zoo, it
-# should not be necessary to define methods for this, that should be done with
-# lower level utilities like tfL and diff, which should be used here.
-ytoypc <- function(obj, names=paste("y to y %ch", seriesNames(obj))) 
-   UseMethod("ytoypc")
- 
-ytoypc.default <- function (obj, names=paste("y to y %ch", seriesNames(obj)) ){
-   obj <- percentChange(obj, lag = tffrequency(obj))
-   if(is.null(options()$ModSeriesNames) || options()$ModSeriesNames)
-        seriesNames(obj) <- names
-   obj
-}
-
-
-# See Note 1 above
-percentChange <- function(obj, ...) UseMethod("percentChange")
-
-percentChange.default <- function(obj, base=NULL, lag=1, 
-      cumulate=FALSE, e=FALSE, ...)
-{#  (... further arguments, currently disregarded)
-   cls <- class(obj)
-   # note next has to be applied to a shorter object in the end
-   #if (is.tframed(obj)) tf <- list(end=tfend(obj), frequency=tffrequency(obj))
-   #else tf <- NULL
-   if (!is.tframed(obj)) stop("percentChange only works on tframed objects.")
-   tf <- tframe(diff(obj, lag=lag)) # not very efficient
-   if (is.null(dim(obj)))
-     {vec <- TRUE
-      obj <- matrix(obj, length(obj),1)
-     }
-   else vec <- FALSE
-   mm <- rbind(base,obj)
-   if (any(cumulate))
-          mm[,cumulate] <-apply(mm[,cumulate,drop=FALSE],2,cumsum)
-   if (any(e)) mm[,e] <- exp(mm[,e,drop=FALSE])
-   N <- dim(mm)[1]
-   pchange <-100*(mm[(lag+1):N,,drop=FALSE] - 
-                    mm[1:(N-lag),,drop=FALSE])/mm[1:(N-lag),,drop=FALSE]
-   if (vec) pchange <- pchange[,1]
-   tframed(pchange, tf) 
-}
-
-# See Note 1 above
-annualizedGrowth <- function(obj, ...) UseMethod("annualizedGrowth")
-
-annualizedGrowth.default <- function(obj, lag=1, freqLagRatio=frequency(obj)/lag,
-        names=paste("Annual Growth of", seriesNames(obj)), ...) {
-  if (!is.tframed(obj)) stop("annualizedGrowth only works on tframed objects.")
-  d <- tfL(obj, p= lag)
-  r <- 100*((obj / d )^freqLagRatio - 1)
-  if(is.null(options()$ModSeriesNames) || options()$ModSeriesNames)
-        seriesNames(r) <- names
-  tframed(r, tframe(diff(obj, lag=lag))) # not very efficient
-  }
 
 ###############################################
 
@@ -943,46 +739,3 @@ tbind.default <- function (x, ..., pad.start = TRUE, pad.end = TRUE, warn = TRUE
         warning("intersection is NULL")
     r
 }
-
-############################################################################
-
-#   miscellaneous utilities  <<<<<<<<<<
-#   (Useful utilities not strictly part of tframe)
-
-############################################################################
-
-addDate <- function(date, periods, freq)
-  {if (is.null(periods)) periods <- 0
-   c(date[1]+(date[2]+periods-1)%/%freq, 1+(date[2]+periods-1)%%freq)
-  }
-
-
-tsScan <- function(file="", skip=1, nseries=1, sep=",", 
-           na.strings=c("NA", "NC", "ND"), ...)
-   {# all args passed to scan. Expects a file with (default one) title line 
-    # to skip and data in three columns (default separated with commas):
-    #   year, period, data[;1], data[;2], ..., data[;nseries]
-    # and builds a ts with freq set to max(period)
-    z <- scan(file=file, skip=skip, what=as.list(c(seq(2), double(nseries))),
-              sep=sep, na.strings=na.strings, ...)
-    zz <- NULL
-     for  (i in 1:nseries) zz <- cbind(zz, z[[2+i]])
-    ts(zz, start=c(z[[1]][1], z[[2]][1]), frequency=max(z[[2]]))
-    }
-
-tsWrite <- function(x, file="data", header=TRUE, sep=",", digits=16)
-   {# all args passed to scan. Expects a ts or mts.
-    # write file with (default one) title line. 
-    # then data in three columns (efault separated with commas):
-    #   year, period, data[;1], data[;2], ...
-    if (header) write(paste("year", "period", 
-                   paste(seriesNames(x), collapse=sep),sep=sep), file=file)
-    yr  <- floor(time(x))
-    pr  <- 1+ (time(x) %% 1) * frequency(x)
-    dg <- options(digits=digits)
-    on.exit(options(dg))
-    x <- as.matrix(x)
-    write(t(cbind(yr, pr, x)), file=file, ncolumns = 2 + ncol(x), sep=sep, append=header)
-    }
-
-

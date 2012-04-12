@@ -120,13 +120,6 @@ synopsis <- TRUE
   all.ok <- all.ok & ok 
   if (verbose) {if (ok) cat("ok\n") else cat("failed!\n") }
 
-  if(dev.cur() == 1) postscript(file="tframeGraphicsTest.ps")
-
-# plot(dat)
-  tfplot(dat)
-  seriesNames(dat) <- c("newname 1", "newname 2", "newname 3")
-  tfplot(dat)
-
   if (synopsis) 
     {if (verbose) cat("All tframe tests completed")
      if (all.ok) cat(" OK\n") else cat(", some FAILED!\n") }

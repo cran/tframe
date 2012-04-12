@@ -35,11 +35,9 @@
 }
 \section{Side Effects}{An object is printed.}
 \seealso{
-    \code{\link{tfplot}}
     \code{\link{tframe}}
     \code{\link{tframed}}
     \code{\link{print}}
-    \code{\link{plot}}
 }
 \examples{
     tfprint(ts(rnorm(100)))
