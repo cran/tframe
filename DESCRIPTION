@@ -1,5 +1,5 @@
 Package: tframe
-Version: 2012.4-2
+Version: 2012.8-1
 Title: Time Frame coding kernel
 Description: The tframe package provides a kernel of functions for
         programming time series methods in a way that is relatively
@@ -7,7 +7,7 @@ Description: The tframe package provides a kernel of functions for
         plotting, time windowing, and some other utility functions
         which are specifically intended for time series.  See the Guide
         distributed as a vignette, or ?tframe.Intro for more details.
-        (User utilities other than the programming kernal have been
+        (User utilities other than the programming kernel have been
         moved into package tfplot.)
 Depends: R (>= 2.5.0)
 Imports: stats
@@ -19,6 +19,6 @@ Maintainer: Paul Gilbert <pgilbert.ttv9z@ncf.ca>
 URL: http://tsanalysis.r-forge.r-project.org/
 Repository: CRAN
 Repository/R-Forge/Project: tsanalysis
-Repository/R-Forge/Revision: 106
-Packaged: 2012-04-12 16:30:36 UTC; rforge
-Date/Publication: 2012-05-02 06:39:36
+Repository/R-Forge/Revision: 117
+Packaged: 2012-08-14 18:19:48 UTC; rforge
+Date/Publication: 2012-09-20 06:42:39

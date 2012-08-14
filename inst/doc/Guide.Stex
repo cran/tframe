@@ -20,11 +20,8 @@ library("tframe")
 \end{Scode}
 
 The code from the vignette that generates this guide can 
-be loaded into an editor with \code{edit(vignette("tframe"))}.
+be loaded into an editor with \code{edit(vignette("Guide", package="tframe"))}.
 This uses the default editor, which can be changed using \code{options()}.
-It should be possible to view the pdf version of this 
-package guide with \code{print(vignette("tframe"))}.
-
 
 The \pkg{tframe} functions are programming utilities used by other packages.
 For example, packages \pkg{dse}, \pkg{tsfa}, \pkg{TSdbi} use this set of 

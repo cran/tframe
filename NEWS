@@ -1,3 +1,7 @@
+Changes in tframe version 2012.8-1
+
+   o	Fixed spelling error in DESCRIPTION file.
+
 Changes in tframe version 2012.4-2
 
    o	Split tfplot and other user utilities into package tfplot.

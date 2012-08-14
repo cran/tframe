@@ -1,9 +1,9 @@
-a64a6243444eada24082233d68487022 *DESCRIPTION
+cd78e1a24dd335ade0b42753798bf919 *DESCRIPTION
 811d04733f18d1aa8ed670e9736f0553 *NAMESPACE
-29af6ee970075a71cccef8d96139ae1d *NEWS
+93235962ebac246abe72c981baeb1492 *NEWS
 f37d49648eb1f67277cc4ad5156b9a6b *R/Rts.R
 51960e126a3fa81cde4b10a667f1ed5c *R/tframe.R
-8243e15b734bc1d1c63fa05a0d8d8ebb *inst/doc/Guide.Stex
+d3610b61cd66796d54ead556969dde88 *inst/doc/Guide.Stex
 8d9aaf57a9afdb469f63587b4c111d43 *inst/doc/Guide.pdf
 754ee34488898ef2a09ba5753403cb0f *man/00tframe.Intro.Rd
 e4a04b54e2db8ea79b694ee0b54712f7 *man/checktframeConsistent.Rd
@@ -27,4 +27,4 @@ bab538f389406d692ea442d76445f686 *man/tfwindow.Rd
 c4f3b1de2ee3fcbfb0e410f278eaf7bb *man/trimNA.Rd
 070635e96da7f9cb25874c744fea69f0 *tests/tf2.R
 e59aaa13a0e2c5109e4cedad7d91df7f *tests/tframe.R
-8243e15b734bc1d1c63fa05a0d8d8ebb *vignettes/Guide.Stex
+d3610b61cd66796d54ead556969dde88 *vignettes/Guide.Stex
