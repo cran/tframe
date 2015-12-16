@@ -1,5 +1,5 @@
 Package: tframe
-Version: 2015.1-1
+Version: 2015.12-1
 Title: Time Frame Coding Kernel
 Description: A kernel of functions for programming 
 	time series methods in a way that is relatively independently of the 
@@ -18,6 +18,6 @@ Author: Paul Gilbert <pgilbert.ttv9z@ncf.ca>
 Maintainer: Paul Gilbert <pgilbert.ttv9z@ncf.ca>
 URL: http://tsanalysis.r-forge.r-project.org/
 NeedsCompilation: no
-Packaged: 2015-01-03 22:24:52 UTC; paul
+Packaged: 2015-12-15 16:33:36 UTC; paul
 Repository: CRAN
-Date/Publication: 2015-01-05 21:00:54
+Date/Publication: 2015-12-16 18:54:10

@@ -1,8 +1,5 @@
-importFrom("stats","start")
-importFrom("stats","end")
-importFrom("stats","frequency")
-importFrom("stats","time")
-importFrom("stats","aggregate")
+importFrom("stats","ts", "tsp", "is.ts", "as.ts", "tsp<-", "window")
+importFrom("stats","start", "end", "frequency", "time", "aggregate")
 
 export("classed")
 export("seqN")

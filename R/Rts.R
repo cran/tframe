@@ -16,7 +16,7 @@ tframe.ts <- function(x){classed(tsp(x), c("tstframe", "tframe"))} # extractor
 tfSet.tstframe <- function(value, x) {
     if (is.list(value)) { return(do.call("ts", append(list(x), value)))}
     else {
-        r <- try(x <- ts(x)) # vector of tsp values
+        r <- try(x <- ts(x), silent=TRUE) # vector of tsp values
         if (inherits(r, "try-error")) {attr(x, "tframe") <- value}
 	else tsp(x) <- value
 	return(x)
